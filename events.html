@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cadet Dashboard | Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .search-box { max-width: 300px; margin-bottom: 20px; }
+        .table-container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Registered Cadets List</h2>
+            <input type="text" id="searchInput" class="form-control search-box" placeholder="Search by Name or Enrollment...">
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Enrollment</th>
+                        <th>College</th>
+                        <th>Wing</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="cadetTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Data Load Karne ka Function
+        function loadCadets() {
+            fetch('http://localhost:5000/cadets')
+                .then(res => res.json())
+                .then(data => {
+                    renderTable(data);
+                });
+        }
+
+        // Table ko screen par dikhane ka function
+        function renderTable(data) {
+            const tbody = document.getElementById('cadetTableBody');
+            tbody.innerHTML = '';
+            data.forEach(cadet => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${cadet.full_name}</td>
+                        <td>${cadet.enrollment_no}</td>
+                        <td>${cadet.college_name}</td>
+                        <td>${cadet.wing}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCadet(${cadet.id})">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const value = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#cadetTableBody tr');
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(value) ? '' : 'none';
+            });
+        });
+
+        // Delete Functionality
+        function deleteCadet(id) {
+            if(confirm("Kya aap is cadet ko delete karna chahte hain?")) {
+                fetch(`http://localhost:5000/delete-cadet/${id}`, { method: 'DELETE' })
+                .then(res => res.text())
+                .then(msg => {
+                    alert(msg);
+                    loadCadets(); // Table refresh karein
+                });
+            }
+        }
+
+        loadCadets(); // Page khulte hi data load karein
+    </script>
+</body>
+</html>

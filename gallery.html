@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | NCC System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .gallery-img:hover {
+            opacity: 0.8;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">NCC SYSTEM</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Registration</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link active text-warning" href="gallery.html">Gallery</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="section-title">Photo Gallery</h2>
+        <p class="mb-4 text-muted">Glimpses of NCC training and activities.</p>
+
+        <div class="row g-3">
+            <div class="col-lg-4 col-md-6 mb-4">
+    <img src="images/ncc1.jpg" class="gallery-img w-100 rounded shadow" alt="NCC Training 1">
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <img src="images/ncc2.jpg" class="gallery-img w-100 rounded shadow" alt="NCC Parade">
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <img src="images/ncc3.jpg" class="gallery-img w-100 rounded shadow" alt="NCC Camp">
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <img src="images/ncc4.jpg" class="gallery-img w-100 rounded shadow" alt="NCC Activity">
+</div>
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <img src="images/ncc5.jpg" class="gallery-img w-100 rounded shadow" alt="NCC Ceremony">
+</div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <p>&copy; 2026 NCC Management System</p>
+    </footer>
+
+</body>
+</html>

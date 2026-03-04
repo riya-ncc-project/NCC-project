@@ -1,0 +1,77 @@
+/* Navbar ke dots hatane ke liye */
+.navbar-nav {
+    list-style: none !important;
+    padding-left: 0;
+}
+
+.nav-item {
+    display: inline-block;
+}
+
+/* Image container fix */
+.carousel-item img {
+    width: 100%;
+    height: 80vh;
+    object-fit: cover;
+}
+
+
+/* Poori Website ke liye Basic Setup */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar ka Style (Jo upar green dikh raha hai use theek karne ke liye) */
+.navbar {
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Hero Section (Running Images ke peeche ka area) */
+.hero-section {
+    position: relative;
+    height: 85vh; /* Screen ki height adjust karne ke liye */
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 85vh;
+    object-fit: cover; /* Image ko stretch hone se rokne ke liye */
+    filter: brightness(0.6); /* Text ko chamkane ke liye image thodi dark */
+}
+
+/* Image ke upar ka Text (UNITY AND DISCIPLINE) */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+/* Vision aur Motto Cards ka professional look */
+.card-custom {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    height: 100%;
+    border-top: 5px solid #198754; /* Green professional border */
+    transition: 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-10px);
+}
