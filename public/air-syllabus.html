@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NCC Air Wing Syllabus Notes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root { --navy:#001f3f; --gold:#c9a84c; --cream:#faf6ec; }
+body { font-family:'Barlow',sans-serif; background:var(--cream); }
+.top-bar { background:var(--navy); border-bottom:3px solid var(--gold); padding:12px 0; }
+.top-bar .back-btn { color:var(--gold); text-decoration:none; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.9rem; }
+.top-bar .back-btn:hover { color:#fff; }
+.top-bar h1 { color:#fff; font-family:'Rajdhani',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:2px; margin:0; }
+.top-bar .dl-btn { background:var(--gold); color:var(--navy); border:none; border-radius:6px; padding:8px 20px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.88rem; letter-spacing:1px; cursor:pointer; }
+.chapter-nav { background:#fff; border-bottom:2px solid #e0d8c0; padding:0; overflow-x:auto; white-space:nowrap; }
+.chapter-nav a { display:inline-block; padding:10px 18px; font-family:'Rajdhani',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#666; text-decoration:none; border-bottom:3px solid transparent; }
+.chapter-nav a:hover, .chapter-nav a.active { color:var(--navy); border-bottom-color:var(--gold); }
+.content-wrap { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
+.chapter-title { font-family:'Rajdhani',sans-serif; font-size:1.5rem; font-weight:700; color:var(--navy); border-left:4px solid var(--gold); padding-left:14px; margin-bottom:20px; }
+.section-head { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:2px; margin:24px 0 10px; padding-bottom:6px; border-bottom:1px solid #e0d8c0; }
+p { font-size:0.93rem; line-height:1.75; color:#333; margin-bottom:12px; }
+.note-box { background:#fff8e1; border-left:4px solid var(--gold); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:0.9rem; }
+table.notes-table { width:100%; border-collapse:collapse; font-size:0.88rem; margin:16px 0; }
+.notes-table th { background:var(--navy); color:var(--gold); padding:9px 14px; text-align:left; font-family:'Rajdhani',sans-serif; letter-spacing:1px; }
+.notes-table td { padding:9px 14px; border-bottom:1px solid #eee; vertical-align:top; }
+.notes-table tr:hover td { background:#faf6ec; }
+.point-list { list-style:none; padding:0; margin:10px 0; }
+.point-list li { padding:6px 0 6px 24px; position:relative; font-size:0.9rem; color:#333; border-bottom:1px solid #f0ece0; }
+.point-list li::before { content:'▸'; position:absolute; left:0; color:var(--gold); }
+.chapter-section { display:none; }
+.chapter-section.active { display:block; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="container d-flex align-items-center justify-content-between gap-3 flex-wrap">
+    <a href="air-wing.html" class="back-btn"><i class="fas fa-arrow-left me-2"></i>Back to Air Wing</a>
+    <h1><i class="fas fa-plane me-2" style="color:var(--gold)"></i>NCC AIR WING SYLLABUS NOTES</h1>
+    <button class="dl-btn" onclick="window.print()"><i class="fas fa-print me-2"></i>Print / Save PDF</button>
+  </div>
+</div>
+<div class="chapter-nav">
+  <a href="#" class="active" onclick="showChapter('ch1',this)">1. NCC &amp; IAF Intro</a>
+  <a href="#" onclick="showChapter('ch2',this)">2. Principles of Flight</a>
+  <a href="#" onclick="showChapter('ch3',this)">3. Aircraft Types</a>
+  <a href="#" onclick="showChapter('ch4',this)">4. Aero-modelling</a>
+  <a href="#" onclick="showChapter('ch5',this)">5. Meteorology</a>
+  <a href="#" onclick="showChapter('ch6',this)">6. Navigation</a>
+  <a href="#" onclick="showChapter('ch7',this)">7. First Aid</a>
+</div>
+<div class="content-wrap">
+
+  <div id="ch1" class="chapter-section active">
+    <div class="chapter-title">Chapter 1 — NCC &amp; Indian Air Force Introduction</div>
+    <div class="section-head">Indian Air Force — Key Facts</div>
+    <table class="notes-table">
+      <thead><tr><th>Detail</th><th>Information</th></tr></thead>
+      <tbody>
+        <tr><td>Founded</td><td>8 October 1932</td></tr>
+        <tr><td>HQ</td><td>Air HQ, Vayu Bhawan, New Delhi</td></tr>
+        <tr><td>Chief of Air Staff</td><td>Air Chief Marshal (current)</td></tr>
+        <tr><td>Motto</td><td>"Nabha Sprisham Diptam" — Touch the Sky with Glory</td></tr>
+        <tr><td>Air Force Day</td><td>8 October every year</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">NCC Air Wing Ranks</div>
+    <table class="notes-table">
+      <thead><tr><th>NCC Rank</th><th>IAF Equivalent</th></tr></thead>
+      <tbody>
+        <tr><td>Cadet</td><td>Aircraftman</td></tr>
+        <tr><td>Corporal Cadet</td><td>Corporal</td></tr>
+        <tr><td>Sergeant Cadet</td><td>Sergeant</td></tr>
+        <tr><td>Under Officer</td><td>Flying Officer</td></tr>
+        <tr><td>Senior Under Officer</td><td>Flight Lieutenant</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>IAF Motto translation:</strong> From the Bhagavad Gita (Ch 11, Verse 24) — "Nabha Sprisham Diptam" means "Touch the Sky with Glory".</div>
+  </div>
+
+  <div id="ch2" class="chapter-section">
+    <div class="chapter-title">Chapter 2 — Principles of Flight</div>
+    <div class="section-head">Four Forces of Flight</div>
+    <table class="notes-table">
+      <thead><tr><th>Force</th><th>Direction</th><th>Created By</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lift</strong></td><td>Upward</td><td>Wings (aerofoil shape)</td></tr>
+        <tr><td><strong>Weight (Gravity)</strong></td><td>Downward</td><td>Mass of aircraft</td></tr>
+        <tr><td><strong>Thrust</strong></td><td>Forward</td><td>Engine / propeller</td></tr>
+        <tr><td><strong>Drag</strong></td><td>Backward</td><td>Air resistance</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>For level flight:</strong> Lift = Weight and Thrust = Drag</div>
+
+    <div class="section-head">How Wings Generate Lift</div>
+    <p>Wings have an <strong>aerofoil (airfoil)</strong> cross-section — curved on top and flatter on bottom. Air moving over the curved top surface travels faster, creating lower pressure. Higher pressure below pushes the wing (and aircraft) upward — this is <strong>Bernoulli's Principle</strong>.</p>
+
+    <div class="section-head">Three Axes of Aircraft Movement</div>
+    <table class="notes-table">
+      <thead><tr><th>Axis</th><th>Movement</th><th>Controlled By</th></tr></thead>
+      <tbody>
+        <tr><td>Longitudinal (Roll)</td><td>Rolling left/right</td><td>Ailerons</td></tr>
+        <tr><td>Lateral (Pitch)</td><td>Nose up/down</td><td>Elevator</td></tr>
+        <tr><td>Vertical (Yaw)</td><td>Nose left/right</td><td>Rudder</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="ch3" class="chapter-section">
+    <div class="chapter-title">Chapter 3 — Aircraft Types</div>
+    <div class="section-head">Classification by Engine</div>
+    <ul class="point-list">
+      <li><strong>Piston Engine</strong> — uses petrol, slower speed, used in light aircraft (e.g. Cessna)</li>
+      <li><strong>Turboprop</strong> — jet engine + propeller (e.g. HAL Saras, ATR aircraft)</li>
+      <li><strong>Turbojet</strong> — pure jet, high speed (e.g. early jet fighters)</li>
+      <li><strong>Turbofan</strong> — most modern jets — fuel efficient (e.g. Boeing 737, Sukhoi Su-30)</li>
+    </ul>
+    <div class="section-head">IAF Aircraft — Important Examples</div>
+    <table class="notes-table">
+      <thead><tr><th>Aircraft</th><th>Type</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>Sukhoi Su-30 MKI</td><td>Fighter</td><td>Air superiority, strike</td></tr>
+        <tr><td>Rafale</td><td>Fighter</td><td>Multi-role combat</td></tr>
+        <tr><td>HAL Tejas</td><td>Fighter (indigenous)</td><td>Light combat aircraft</td></tr>
+        <tr><td>C-130 Hercules</td><td>Transport</td><td>Troop/cargo transport</td></tr>
+        <tr><td>Mi-17 V5</td><td>Helicopter</td><td>Transport, SAR</td></tr>
+        <tr><td>Apache AH-64</td><td>Attack Helicopter</td><td>Close air support</td></tr>
+        <tr><td>IL-76</td><td>Heavy Transport</td><td>Strategic airlift</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="ch4" class="chapter-section">
+    <div class="chapter-title">Chapter 4 — Aero-modelling</div>
+    <div class="section-head">Types of Model Aircraft</div>
+    <ul class="point-list">
+      <li><strong>Free Flight (FF)</strong> — no control after launch, flies freely</li>
+      <li><strong>Control Line (CL)</strong> — controlled by two wires from flier's hand</li>
+      <li><strong>Radio Control (RC)</strong> — controlled by radio transmitter</li>
+      <li><strong>Gliders</strong> — no engine, uses air currents</li>
+    </ul>
+    <div class="section-head">Parts of a Model Aircraft</div>
+    <table class="notes-table">
+      <thead><tr><th>Part</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td>Fuselage</td><td>Main body of the model</td></tr>
+        <tr><td>Wing</td><td>Generates lift</td></tr>
+        <tr><td>Tailplane (Horizontal Stabiliser)</td><td>Controls pitch stability</td></tr>
+        <tr><td>Fin (Vertical Stabiliser)</td><td>Controls yaw stability</td></tr>
+        <tr><td>Elevator</td><td>Controls pitch movement</td></tr>
+        <tr><td>Rudder</td><td>Controls yaw movement</td></tr>
+        <tr><td>Ailerons</td><td>Controls roll movement</td></tr>
+        <tr><td>Motor/Engine</td><td>Provides thrust</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>NCC Aero-modelling Competition:</strong> Cadets compete in glider flying, control-line speed and RC model categories at state and national NCC meets.</div>
+  </div>
+
+  <div id="ch5" class="chapter-section">
+    <div class="chapter-title">Chapter 5 — Meteorology</div>
+    <div class="section-head">Atmosphere Layers</div>
+    <table class="notes-table">
+      <thead><tr><th>Layer</th><th>Altitude</th><th>Key Feature</th></tr></thead>
+      <tbody>
+        <tr><td>Troposphere</td><td>0 – 12 km</td><td>Weather occurs here; temperature decreases with height</td></tr>
+        <tr><td>Stratosphere</td><td>12 – 50 km</td><td>Ozone layer; jet aircraft fly here</td></tr>
+        <tr><td>Mesosphere</td><td>50 – 80 km</td><td>Meteors burn up here</td></tr>
+        <tr><td>Thermosphere</td><td>80 – 700 km</td><td>Aurora; satellites orbit here</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Cloud Types</div>
+    <table class="notes-table">
+      <thead><tr><th>Cloud</th><th>Height</th><th>Appearance</th></tr></thead>
+      <tbody>
+        <tr><td>Cirrus</td><td>High (above 6 km)</td><td>Thin, wispy, ice crystals</td></tr>
+        <tr><td>Cumulus</td><td>Low to Medium</td><td>Puffy, flat base — fair weather</td></tr>
+        <tr><td>Stratus</td><td>Low</td><td>Flat, grey, fog-like layer</td></tr>
+        <tr><td>Cumulonimbus</td><td>All levels</td><td>Thunderstorm cloud — dangerous for aviation</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Wind</div>
+    <ul class="point-list">
+      <li>Wind speed measured in knots (nautical miles/hr)</li>
+      <li>Instrument: <strong>Anemometer</strong> measures speed; <strong>Wind Vane</strong> shows direction</li>
+      <li>Wind always named by direction it comes FROM (North wind blows from north to south)</li>
+    </ul>
+  </div>
+
+  <div id="ch6" class="chapter-section">
+    <div class="chapter-title">Chapter 6 — Basic Air Navigation</div>
+    <div class="section-head">Key Terms</div>
+    <table class="notes-table">
+      <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Track</td><td>Actual path of aircraft over ground</td></tr>
+        <tr><td>Heading</td><td>Direction aircraft nose is pointing</td></tr>
+        <tr><td>True Airspeed (TAS)</td><td>Speed relative to air mass</td></tr>
+        <tr><td>Ground Speed (GS)</td><td>Speed relative to ground</td></tr>
+        <tr><td>Wind Drift</td><td>Sideways movement caused by wind</td></tr>
+        <tr><td>ETA</td><td>Estimated Time of Arrival</td></tr>
+        <tr><td>Waypoint</td><td>Specific geographic location used in navigation</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Altimeter Readings</div>
+    <ul class="point-list">
+      <li><strong>QNH</strong> — altitude above mean sea level (MSL)</li>
+      <li><strong>QFE</strong> — height above aerodrome</li>
+      <li><strong>Flight Level (FL)</strong> — pressure altitude in hundreds of feet (FL 350 = 35,000 ft)</li>
+    </ul>
+  </div>
+
+  <div id="ch7" class="chapter-section">
+    <div class="chapter-title">Chapter 7 — First Aid for Air Cadets</div>
+    <div class="section-head">Aviation-related Medical Issues</div>
+    <table class="notes-table">
+      <thead><tr><th>Condition</th><th>Cause</th><th>Treatment</th></tr></thead>
+      <tbody>
+        <tr><td>Hypoxia</td><td>Lack of oxygen at high altitude</td><td>Use oxygen mask; descend to lower altitude</td></tr>
+        <tr><td>Barotrauma</td><td>Pressure changes in ears/sinuses</td><td>Swallow, yawn or Valsalva manoeuvre</td></tr>
+        <tr><td>Decompression Sickness</td><td>Rapid pressure reduction (bends)</td><td>Recompression chamber; oxygen</td></tr>
+        <tr><td>Motion Sickness</td><td>Inner ear disturbance</td><td>Look at horizon; avoid reading; medication</td></tr>
+        <tr><td>G-Force effects</td><td>High acceleration in turns</td><td>Anti-G straining manoeuvre; G-suit</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Standard First Aid — DRABC</div>
+    <ul class="point-list">
+      <li><strong>D</strong>anger — check for hazards</li>
+      <li><strong>R</strong>esponse — is casualty conscious?</li>
+      <li><strong>A</strong>irway — open and clear airway</li>
+      <li><strong>B</strong>reathing — check for breathing</li>
+      <li><strong>C</strong>irculation — check pulse, control bleeding</li>
+    </ul>
+    <div class="note-box"><strong>CPR:</strong> 30 chest compressions : 2 rescue breaths at 100–120 compressions/minute until help arrives.</div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showChapter(id, el) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.chapter-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  return false;
+}
+</script>
+</body>
+</html>

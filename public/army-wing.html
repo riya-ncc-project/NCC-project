@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Army Wing | NCC Portal</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:   #001f3f;
+  --gold:   #c9a84c;
+  --cream:  #faf6ec;
+  --light:  #f0ece0;
+  --muted:  #5a5a5a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Barlow', sans-serif; background: var(--cream); color: #222; }
+
+/* NAV */
+.navbar { background: var(--navy) !important; border-bottom: 3px solid var(--gold); }
+.navbar-brand, .nav-link { color: #fff !important; font-weight: 600; text-transform: uppercase; }
+.nav-link:hover { color: var(--gold) !important; }
+
+/* HERO BANNER */
+.wing-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #003366 100%);
+  border-bottom: 4px solid var(--gold);
+  padding: 48px 0 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.wing-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 41px);
+}
+.wing-hero .badge-pill {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.78rem; letter-spacing: 3px;
+  padding: 4px 18px; border-radius: 20px;
+  margin-bottom: 14px; text-transform: uppercase;
+}
+.wing-hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700; color: #fff;
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.wing-hero h1 span { color: var(--gold); }
+.wing-hero p { color: rgba(255,255,255,0.6); font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; }
+
+/* NOTIFICATION BAR */
+.notif-bar {
+  background: #fff8e1;
+  border-left: 4px solid var(--gold);
+  padding: 12px 20px;
+  margin: 24px 0 0;
+  font-size: 0.9rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.notif-bar .badge { background: var(--gold); color: var(--navy); font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; font-weight: 700; }
+
+/* SECTION HEADING */
+.sec-head {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--navy); letter-spacing: 3px;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-head i { color: var(--gold); }
+
+/* STAT BOXES */
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.stat-box {
+  flex: 1; min-width: 120px;
+  background: var(--navy);
+  border-radius: 8px; padding: 16px 12px;
+  text-align: center;
+  border-top: 3px solid var(--gold);
+}
+.stat-box .num { font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+.stat-box .lbl { font-size: 0.72rem; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+/* DOWNLOAD CARDS */
+.dl-card {
+  background: #fff;
+  border: 1px solid #e0d8c0;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+  text-decoration: none; color: inherit;
+}
+.dl-card:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(201,168,76,0.15); transform: translateX(4px); color: inherit; }
+.dl-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.dl-icon.red   { background: rgba(192,57,43,0.1); color: #c0392b; }
+.dl-icon.blue  { background: rgba(0,31,63,0.1);   color: var(--navy); }
+.dl-icon.gold  { background: rgba(201,168,76,0.15); color: var(--gold); }
+.dl-icon.green { background: rgba(30,126,52,0.1);  color: #1e7e34; }
+.dl-info .title { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.dl-info .sub   { font-size: 0.78rem; color: var(--muted); }
+.dl-card .btn-dl {
+  margin-left: auto; flex-shrink: 0;
+  background: var(--navy); color: var(--gold);
+  border: none; border-radius: 6px;
+  padding: 7px 16px; font-family: 'Rajdhani', sans-serif;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 1px;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.dl-card:hover .btn-dl { background: var(--gold); color: var(--navy); }
+
+/* HANDBOOK GRID */
+.hb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.hb-card {
+  background: #fff;
+  border: 1px solid #e0d8c0;
+  border-radius: 10px; padding: 20px 16px;
+  text-align: center; transition: all 0.25s;
+  text-decoration: none; color: inherit;
+}
+.hb-card:hover { border-color: var(--gold); box-shadow: 0 6px 20px rgba(201,168,76,0.15); transform: translateY(-4px); color: inherit; }
+.hb-card .icon { font-size: 2rem; margin-bottom: 10px; }
+.hb-card .name { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.hb-card .desc { font-size: 0.75rem; color: var(--muted); margin-bottom: 12px; line-height: 1.4; }
+.hb-card .btn-read {
+  background: transparent; border: 1.5px solid var(--navy);
+  color: var(--navy); border-radius: 5px;
+  padding: 5px 14px; font-family: 'Rajdhani', sans-serif;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;
+  cursor: pointer; transition: all 0.2s;
+}
+.hb-card:hover .btn-read { background: var(--navy); color: var(--gold); }
+
+/* JOB CARDS */
+.job-card {
+  background: #fff;
+  border: 1px solid #e0d8c0;
+  border-left: 4px solid var(--navy);
+  border-radius: 8px; padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.job-card .job-title { font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); }
+.job-card .job-desc  { font-size: 0.82rem; color: var(--muted); margin: 4px 0 10px; }
+.btn-view { background: var(--gold); color: var(--navy); border: none; border-radius: 5px; padding: 5px 16px; font-family: 'Rajdhani', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 1px; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn-view:hover { background: var(--navy); color: var(--gold); }
+
+/* ACTIVITY TABLE */
+.act-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.act-table th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; font-size: 0.78rem; text-transform: uppercase; }
+.act-table td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+.act-table tr:last-child td { border-bottom: none; }
+.act-table tr:hover td { background: #faf6ec; }
+
+/* FOOTER */
+footer { background: #001a35 !important; color: #fff; border-top: 5px solid var(--gold); padding: 36px 0 0; margin-top: 0; }
+.footer-heading { color: var(--gold); font-weight: 700; text-transform: uppercase; margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; }
+.copyright-section { background: rgba(0,0,0,0.2); padding: 12px 0; margin-top: 24px; }
+footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+@media(max-width:576px) { .stat-row { flex-direction: column; } .hb-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="index.html">
+      <img src="images/logo.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-circle border border-warning">
+      NATIONAL CADET CORPS
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Army Wing</a></li>
+        <li class="nav-item"><a class="nav-link" href="navy-wing.html">Navy Wing</a></li>
+        <li class="nav-item"><a class="nav-link" href="air-wing.html">Air Wing</a></li>
+        <li class="nav-item"><a class="nav-link" href="ncc-form.html">Join NCC</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wing-hero">
+  <div class="container">
+    <div class="badge-pill">🏅 National Cadet Corps</div>
+    <h1>ARMY <span>WING</span></h1>
+    <p>Cadet Resources &amp; Study Material</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container py-4">
+
+  <!-- NOTIFICATION -->
+  <div class="notif-bar">
+    <i class="fas fa-bullhorn" style="color:var(--gold)"></i>
+    <span><strong>New Notification:</strong> NCC Special Entry Scheme — Applications open for B &amp; C Certificate holders</span>
+    <span class="badge">NEW</span>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-row mt-4">
+    <div class="stat-box"><div class="num">A/B/C</div><div class="lbl">Certificate Levels</div></div>
+    <div class="stat-box"><div class="num">2 Yrs</div><div class="lbl">Training Duration</div></div>
+    <div class="stat-box"><div class="num">5%</div><div class="lbl">Army Vacancy Reserved</div></div>
+    <div class="stat-box"><div class="num">NDA/CDS</div><div class="lbl">Entry Schemes</div></div>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-lg-8">
+
+      <!-- STUDY MATERIAL -->
+      <div class="sec-head"><i class="fas fa-book-open"></i> Study Material</div>
+
+      <a href="army-syllabus.html" class="dl-card">
+        <div class="dl-icon red"><i class="fas fa-file-pdf"></i></div>
+        <div class="dl-info">
+          <div class="title">NCC Army Syllabus Notes</div>
+          <div class="sub">Complete theory + practicals &nbsp;|&nbsp; PDF &nbsp;|&nbsp; 4.2 MB</div>
+        </div>
+        <button class="btn-dl"><i class="fas fa-download me-1"></i> Download</button>
+      </a>
+
+      <a href="army-syllabus.html" class="dl-card">
+        <div class="dl-icon red"><i class="fas fa-file-pdf"></i></div>
+        <div class="dl-info">
+          <div class="title">B &amp; C Certificate Previous Year Papers</div>
+          <div class="sub">Last 10 years question bank &nbsp;|&nbsp; PDF &nbsp;|&nbsp; 6.8 MB</div>
+        </div>
+        <button class="btn-dl"><i class="fas fa-download me-1"></i> Download</button>
+      </a>
+
+      <a href="army-syllabus.html" class="dl-card">
+        <div class="dl-icon blue"><i class="fas fa-map"></i></div>
+        <div class="dl-info">
+          <div class="title">Map Reading &amp; Compass Notes</div>
+          <div class="sub">Drill, map reading, weapon training &nbsp;|&nbsp; PDF &nbsp;|&nbsp; 2.1 MB</div>
+        </div>
+        <button class="btn-dl"><i class="fas fa-download me-1"></i> Download</button>
+      </a>
+
+      <a href="army-drill-handbook.html" class="dl-card">
+        <div class="dl-icon gold"><i class="fas fa-file-alt"></i></div>
+        <div class="dl-info">
+          <div class="title">NCC Army Drill &amp; Parade Manual</div>
+          <div class="sub">Official drill commands &amp; procedures &nbsp;|&nbsp; PDF &nbsp;|&nbsp; 3.5 MB</div>
+        </div>
+        <button class="btn-dl"><i class="fas fa-download me-1"></i> Download</button>
+      </a>
+
+      <a href="army-syllabus.html" class="dl-card">
+        <div class="dl-icon green"><i class="fas fa-first-aid"></i></div>
+        <div class="dl-info">
+          <div class="title">First Aid &amp; Field Craft Notes</div>
+          <div class="sub">Emergency procedures &amp; fieldcraft &nbsp;|&nbsp; PDF &nbsp;|&nbsp; 1.8 MB</div>
+        </div>
+        <button class="btn-dl"><i class="fas fa-download me-1"></i> Download</button>
+      </a>
+
+      <!-- HANDBOOKS -->
+      <div class="sec-head mt-4"><i class="fas fa-book"></i> Army Handbooks</div>
+      <div class="hb-grid">
+        <a href="army-drill-handbook.html" class="hb-card">
+          <div class="icon">🪖</div>
+          <div class="name">Drill Manual</div>
+          <div class="desc">Official NCC Army drill commands &amp; parade procedures</div>
+          <button class="btn-read">Read Online</button>
+        <a href="army-syllabus.html" class="hb-card">
+          <div class="icon">🔫</div>
+          <div class="name">Weapon Training</div>
+          <div class="desc">Handling, safety &amp; firing procedures for cadets</div>
+          <button class="btn-read">Read Online</button>
+        </a>
+        <a href="army-syllabus.html" class="hb-card">
+          <div class="icon">🏕️</div>
+          <div class="name">Camp Guide</div>
+          <div class="desc">Annual training camp rules, schedule &amp; conduct</div>
+          <button class="btn-read">Read Online</button>
+        </a>
+        <a href="army-syllabus.html" class="hb-card">
+          <div class="icon">🗺️</div>
+          <div class="name">Map Reading</div>
+          <div class="desc">Topography, compass navigation &amp; field skills</div>
+          <button class="btn-read">Read Online</button>
+        </a>
+        <a href="army-syllabus.html" class="hb-card">
+          <div class="icon">🏃</div>
+          <div class="name">Physical Training</div>
+          <div class="desc">PT schedule, fitness standards &amp; exercises</div>
+          <button class="btn-read">Read Online</button>
+        </a>
+        <a href="army-syllabus.html" class="hb-card">
+          <div class="icon">📋</div>
+          <div class="name">NCC Rules &amp; Regulations</div>
+          <div class="desc">Conduct, uniform rules &amp; disciplinary norms</div>
+          <button class="btn-read">Read Online</button>
+        </a>
+      </div>
+
+      <!-- UPCOMING ACTIVITIES -->
+      <div class="sec-head"><i class="fas fa-calendar-alt"></i> Upcoming Activities &amp; Camps</div>
+      <div class="table-responsive mb-4">
+        <table class="act-table">
+          <thead><tr><th>Activity</th><th>Date</th><th>Duration</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Annual Training Camp (ATC)</td><td>April 2026</td><td>10 Days</td><td><a href="ncc-form.html" class="btn-view">Register</a></td></tr>
+            <tr><td>Republic Day Parade Selection</td><td>Oct 2026</td><td>Selection Open</td><td><a href="ncc-form.html" class="btn-view">Apply</a></td></tr>
+            <tr><td>Thal Sainik Camp (TSC)</td><td>Nov 2026</td><td>10 Days</td><td><a href="ncc-form.html" class="btn-view">Apply</a></td></tr>
+            <tr><td>B &amp; C Certificate Exam</td><td>Nov 2026</td><td>2 Days</td><td><a href="ncc-form.html" class="btn-view">Enroll</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /col-lg-8 -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-lg-4">
+
+      <!-- CAREER & JOBS -->
+      <div class="sec-head"><i class="fas fa-briefcase"></i> Career &amp; Jobs</div>
+
+      <div class="job-card">
+        <div class="job-title">NCC Special Entry Scheme</div>
+        <div class="job-desc">5% Army vacancy reserved for NCC C-Certificate holders</div>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+      <div class="job-card">
+        <div class="job-title">NDA Exam 2026</div>
+        <div class="job-desc">National Defence Academy — applications open for 12th pass cadets</div>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+      <div class="job-card">
+        <div class="job-title">CDS Exam 2026</div>
+        <div class="job-desc">Combined Defence Services — graduate level entry</div>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+      <div class="job-card">
+        <div class="job-title">Agniveer Army Recruitment</div>
+        <div class="job-desc">Agnipath scheme — NCC cadets get direct benefit &amp; relaxation</div>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+      <div class="job-card">
+        <div class="job-title">Soldier GD Recruitment</div>
+        <div class="job-desc">General Duty soldier recruitment — open for NCC cadets</div>
+        <a href="#" class="btn-view">View Details</a>
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div class="sec-head mt-4"><i class="fas fa-link"></i> Quick Links</div>
+      <div style="background:#fff;border:1px solid #e0d8c0;border-radius:10px;padding:16px;">
+        <a href="navy-wing.html" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #eee;text-decoration:none;color:var(--navy);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.92rem;">
+          <i class="fas fa-anchor" style="color:var(--gold);width:18px"></i> Navy Wing Resources
+        </a>
+        <a href="air-wing.html" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #eee;text-decoration:none;color:var(--navy);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.92rem;">
+          <i class="fas fa-plane" style="color:var(--gold);width:18px"></i> Air Wing Resources
+        </a>
+        <a href="ncc-form.html" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #eee;text-decoration:none;color:var(--navy);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.92rem;">
+          <i class="fas fa-user-plus" style="color:var(--gold);width:18px"></i> Join NCC — Registration
+        </a>
+        <a href="index.html" style="display:flex;align-items:center;gap:10px;padding:9px 0;text-decoration:none;color:var(--navy);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.92rem;">
+          <i class="fas fa-home" style="color:var(--gold);width:18px"></i> Back to Home
+        </a>
+      </div>
+
+    </div><!-- /col-lg-4 -->
+
+  </div><!-- /row -->
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer class="pt-4">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="footer-heading">NCC Portal</h5>
+        <p style="color:#d1d1d1;font-size:0.88rem;line-height:1.6;">Building the leaders of tomorrow with character, discipline, and the ideals of selfless service.</p>
+      </div>
+      <div class="col-md-4">
+        <h5 class="footer-heading">Wings</h5>
+        <ul class="list-unstyled" style="font-size:0.88rem;">
+          <li class="mb-1"><a href="army-wing.html"><i class="fas fa-chevron-right me-2" style="color:var(--gold);font-size:0.7rem"></i>Army Wing</a></li>
+          <li class="mb-1"><a href="navy-wing.html"><i class="fas fa-chevron-right me-2" style="color:var(--gold);font-size:0.7rem"></i>Navy Wing</a></li>
+          <li class="mb-1"><a href="air-wing.html"><i class="fas fa-chevron-right me-2" style="color:var(--gold);font-size:0.7rem"></i>Air Wing</a></li>
+          <li class="mb-1"><a href="ncc-form.html"><i class="fas fa-chevron-right me-2" style="color:var(--gold);font-size:0.7rem"></i>Join NCC</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5 class="footer-heading">Contact</h5>
+        <p style="font-size:0.88rem;color:#d1d1d1;"><i class="fas fa-envelope me-2" style="color:var(--gold)"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfbcaea7aea1a6bda6b6aefcf7fd8fa8a2aea6a3e1aca0a2">[email&#160;protected]</a></p>
+        <p style="font-size:0.88rem;color:#d1d1d1;"><i class="fas fa-map-marker-alt me-2" style="color:var(--gold)"></i>Mumbai, Maharashtra, India</p>
+      </div>
+    </div>
+  </div>
+  <div class="copyright-section text-center">
+    <div class="container">
+      <p style="font-size:0.82rem;color:#bbb;margin:0;">Copyright © 2026 | All Rights Reserved | Developed by <span style="color:var(--gold);font-weight:700;">Sakshi Sahani</span></p>
+    </div>
+  </div>
+</

@@ -1,0 +1,96 @@
+/* --- GLOBAL STYLES --- */
+:root {
+    --nav-blue:     #001f3f; 
+    --footer-dark:  #001326; 
+    --gold-accent:  #c9a84c; 
+    --cream:        #faf6ec;
+}
+
+body {
+    font-family: 'Barlow', 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cream);
+}
+
+/* --- NAVBAR STYLING --- */
+.navbar {
+    background-color: var(--nav-blue) !important;
+    border-bottom: 3px solid var(--gold-accent);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand, .nav-link { 
+    color: #ffffff !important; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+}
+
+.nav-link:hover, .nav-link.active { 
+    color: var(--gold-accent) !important; 
+}
+
+.navbar-nav {
+    list-style: none !important;
+    padding-left: 0;
+}
+
+/* --- HERO & CAROUSEL --- */
+.carousel-item img {
+    height: 85vh;
+    object-fit: cover;
+    filter: brightness(0.9); /* Faces saaf dikhane ke liye brightness 0.6 se badha di */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+
+/* --- FOOTER STYLING (Jo missing tha) --- */
+footer {
+    background-color: var(--footer-dark) !important;
+    color: #ffffff !important; /* Text ko white kiya taaki dikhe */
+    border-top: 5px solid var(--gold-accent);
+    padding: 60px 0 20px 0;
+}
+
+.footer-heading { 
+    color: var(--gold-accent) !important; 
+    text-transform: uppercase; 
+    font-weight: 700; 
+    margin-bottom: 20px;
+}
+
+footer a { 
+    color: #d1d1d1 !important; 
+    text-decoration: none; 
+}
+
+footer a:hover { 
+    color: var(--gold-accent) !important; 
+}
+
+.copyright-section {
+    background-color: rgba(0,0,0,0.3);
+    padding: 15px 0;
+    margin-top: 30px;
+}
+
+/* --- CARDS --- */
+.card-custom {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    height: 100%;
+    border-top: 5px solid var(--gold-accent);
+    transition: 0.3s ease;
+}

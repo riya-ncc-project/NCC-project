@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NCC Admin Login</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:       #001f3f;
+  --navy2:      #003366;
+  --navy3:      #004080;
+  --gold:       #c9a84c;
+  --gold-light: #e8c96f;
+  --gold-pale:  #f5e9c0;
+  --cream:      #faf6ec;
+  --error:      #c0392b;
+  --success:    #1e7e34;
+  --text-dark:  #1a1a1a;
+  --text-muted: #5a5a5a;
+  --border:     #d4c89a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(0,64,128,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(0,31,63,0.7) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.015) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.015) 60px);
+  pointer-events: none; z-index: 0;
+}
+
+/* Particles */
+.particle {
+  position: fixed; border-radius: 50%;
+  pointer-events: none; opacity: 0;
+  animation: drift linear infinite; z-index: 0;
+}
+@keyframes drift {
+  0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.3; }
+  90%  { opacity: 0.15; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* Header */
+.ncc-header {
+  position: relative; z-index: 10;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 16px 0; text-align: center;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+.ncc-header::after {
+  content: '';
+  position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 3px;
+  background: var(--gold-light); border-radius: 2px;
+}
+.header-emblem {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 50%; margin-bottom: 8px;
+  box-shadow: 0 0 20px rgba(201,168,76,0.5);
+  font-size: 24px; color: var(--navy);
+}
+.header-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.7rem; font-weight: 700;
+  color: var(--gold-light); letter-spacing: 3px;
+}
+.header-sub {
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  letter-spacing: 4px; text-transform: uppercase; margin-top: 2px;
+}
+
+/* Main wrap */
+.main-wrap {
+  position: relative; z-index: 5; flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 16px;
+}
+
+/* Login Card */
+.login-card {
+  background: var(--cream);
+  border-radius: 18px; overflow: hidden;
+  width: 100%; max-width: 460px;
+  box-shadow:
+    0 0 0 1px rgba(201,168,76,0.3),
+    0 25px 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(0,64,128,0.2);
+  animation: cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Card Banner */
+.card-banner {
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy3) 100%);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 16px;
+  position: relative; overflow: hidden;
+}
+.card-banner::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: rgba(201,168,76,0.08); border-radius: 50%;
+}
+.card-banner::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.banner-icon {
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--navy); flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(201,168,76,0.4);
+}
+.banner-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: white; letter-spacing: 2px;
+}
+.banner-sub { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+/* Card Body */
+.card-body-custom { padding: 32px; }
+
+/* Admin badge */
+.admin-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  color: var(--navy); font-weight: 700;
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 22px;
+}
+
+/* Form elements */
+.form-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.76rem; font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 6px; display: flex; align-items: center; gap: 5px;
+}
+.form-label .req { color: var(--error); }
+.form-control {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 9px; padding: 11px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem; color: var(--text-dark);
+  transition: all 0.25s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) inset;
+  width: 100%;
+}
+.form-control:focus {
+  border-color: var(--navy3);
+  box-shadow: 0 0 0 3px rgba(0,64,128,0.12);
+  outline: none;
+}
+.form-control.is-invalid { border-color: var(--error) !important; }
+
+.pass-group { position: relative; }
+.pass-group .form-control { padding-right: 44px; }
+.pass-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; padding: 4px; transition: color 0.2s;
+}
+.pass-toggle:hover { color: var(--navy3); }
+
+/* Alert */
+.alert-army {
+  border-radius: 10px; padding: 12px 16px;
+  font-size: 0.875rem; display: flex; align-items: flex-start; gap: 10px;
+  animation: slideDown 0.3s ease both; margin-bottom: 18px;
+}
+@keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+.alert-army.error { background: rgba(192,57,43,0.09); border:1px solid rgba(192,57,43,0.3); color:var(--error); }
+
+/* Submit button */
+.btn-submit {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy3) 50%, #0059b3 100%);
+  background-size: 200% auto;
+  border: none; border-radius: 10px; color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.4s;
+  box-shadow: 0 4px 20px rgba(0,64,128,0.4);
+  position: relative; overflow: hidden;
+  margin-top: 8px;
+}
+.btn-submit::after {
+  content: '';
+  position: absolute; top:0; left:-100%;
+  width:100%; height:100%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  transition: left 0.5s;
+}
+.btn-submit:hover { background-position: right center; box-shadow: 0 6px 28px rgba(0,64,128,0.55); }
+.btn-submit:hover::after { left: 100%; }
+
+/* Divider info */
+.cred-info {
+  margin-top: 20px; padding: 14px 16px;
+  background: rgba(0,64,128,0.06);
+  border: 1px solid rgba(0,64,128,0.15);
+  border-radius: 10px; font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.cred-info strong { color: var(--navy2); }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- Header -->
+<header class="ncc-header">
+  <div class="header-emblem"><i class="fas fa-shield-halved"></i></div>
+  <div class="header-title">NCC MANAGEMENT SYSTEM</div>
+  <div class="header-sub">National Cadet Corps &bull; Admin Portal</div>
+</header>
+
+<!-- Main -->
+<div class="main-wrap">
+  <div class="login-card">
+
+    <!-- Banner -->
+    <div class="card-banner">
+      <div class="banner-icon"><i class="fas fa-user-shield"></i></div>
+      <div>
+        <div class="banner-title">ADMIN LOGIN</div>
+        <div class="banner-sub">Restricted access &bull; Authorized personnel only</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body-custom">
+      <div style="text-align:center">
+        <span class="admin-badge"><i class="fas fa-lock"></i> Secure Admin Access</span>
+      </div>
+
+      <div id="loginAlert"></div>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <label class="form-label">
+          <i class="fas fa-user" style="color:var(--gold)"></i>
+          Username <span class="req">*</span>
+        </label>
+        <input type="text" id="admin_username" class="form-control"
+               placeholder="Enter admin username"
+               onkeydown="if(event.key==='Enter') submitAdminLogin()"/>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="fas fa-lock" style="color:var(--gold)"></i>
+          Password <span class="req">*</span>
+        </label>
+        <div class="pass-group">
+          <input type="password" id="admin_password" class="form-control"
+                 placeholder="Enter admin password"
+                 onkeydown="if(event.key==='Enter') submitAdminLogin()"/>
+          <button type="button" class="pass-toggle" onclick="togglePass()">
+            <i class="fas fa-eye" id="passIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="loginBtn" onclick="submitAdminLogin()">
+        <i class="fas fa-right-to-bracket me-2"></i> LOGIN TO DASHBOARD
+      </button>
+
+      <div class="cred-info mt-3">
+        <i class="fas fa-info-circle me-1"></i>
+        Default credentials — <strong>Username:</strong> admin &nbsp;|&nbsp;
+        <strong>Password:</strong> ncc@admin123
+        <br/><small style="color:#aaa;margin-top:4px;display:block">
+          server.js mein ADMIN_USERNAME aur ADMIN_PASSWORD change kar sakte ho
+        </small>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Particles
+(function(){
+  const colors = ['#4a7cbc','#c9a84c','#1a4a8a','#e8c96f'];
+  for(let i=0;i<20;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 3 + Math.random()*5;
+    Object.assign(p.style, {
+      width: size+'px', height: size+'px',
+      background: colors[Math.floor(Math.random()*colors.length)],
+      left: Math.random()*100+'%',
+      animationDuration: 8+Math.random()*12+'s',
+      animationDelay: -Math.random()*20+'s'
+    });
+    document.getElementById('particles').appendChild(p);
+  }
+})();
+
+function togglePass() {
+  const inp  = document.getElementById('admin_password');
+  const icon = document.getElementById('passIcon');
+  if(inp.type === 'password') {
+    inp.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    inp.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+function showAlert(msg) {
+  document.getElementById('loginAlert').innerHTML =
+    `<div class="alert-army error">
+      <i class="fas fa-exclamation-circle" style="margin-top:2px;flex-shrink:0"></i>
+      <span>${msg}</span>
+    </div>`;
+}
+function clearAlert() {
+  document.getElementById('loginAlert').innerHTML = '';
+}
+
+async function submitAdminLogin() {
+  clearAlert();
+  const username = document.getElementById('admin_username').value.trim();
+  const password = document.getElementById('admin_password').value;
+
+  // Remove red borders
+  document.getElementById('admin_username').classList.remove('is-invalid');
+  document.getElementById('admin_password').classList.remove('is-invalid');
+
+  // Validation
+  if(!username) {
+    document.getElementById('admin_username').classList.add('is-invalid');
+    showAlert('Username is required.');
+    return;
+  }
+  if(!password) {
+    document.getElementById('admin_password').classList.add('is-invalid');
+    showAlert('Password is required.');
+    return;
+  }
+
+  // Loading state
+  const btn = document.getElementById('loginBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Verifying...';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/admin/login', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if(res.ok) {
+      // Save token in sessionStorage
+      sessionStorage.setItem('adminToken', data.token);
+      sessionStorage.setItem('adminLoggedIn', 'true');
+
+      btn.innerHTML = '<i class="fas fa-check-circle me-2"></i> Login Successful!';
+      btn.style.background = 'linear-gradient(135deg, #1e7e34, #27ae60)';
+
+      // Redirect to dashboard after short delay
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 800);
+
+    } else {
+      showAlert(data.message || 'Invalid credentials.');
+      document.getElementById('admin_username').classList.add('is-invalid');
+      document.getElementById('admin_password').classList.add('is-invalid');
+      btn.innerHTML = '<i class="fas fa-right-to-bracket me-2"></i> LOGIN TO DASHBOARD';
+      btn.disabled = false;
+    }
+
+  } catch(err) {
+    showAlert('Server se connect nahi ho pa raha! Make sure <strong>node server.js</strong> chal raha ho.');
+    btn.innerHTML = '<i class="fas fa-right-to-bracket me-2"></i> LOGIN TO DASHBOARD';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

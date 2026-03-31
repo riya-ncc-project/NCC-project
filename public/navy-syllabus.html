@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NCC Navy Syllabus Notes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root { --navy:#001f3f; --gold:#c9a84c; --cream:#faf6ec; }
+body { font-family:'Barlow',sans-serif; background:var(--cream); }
+.top-bar { background:var(--navy); border-bottom:3px solid var(--gold); padding:12px 0; }
+.top-bar .back-btn { color:var(--gold); text-decoration:none; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.9rem; }
+.top-bar .back-btn:hover { color:#fff; }
+.top-bar h1 { color:#fff; font-family:'Rajdhani',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:2px; margin:0; }
+.top-bar .dl-btn { background:var(--gold); color:var(--navy); border:none; border-radius:6px; padding:8px 20px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.88rem; letter-spacing:1px; cursor:pointer; }
+.chapter-nav { background:#fff; border-bottom:2px solid #e0d8c0; padding:0; overflow-x:auto; white-space:nowrap; }
+.chapter-nav a { display:inline-block; padding:10px 18px; font-family:'Rajdhani',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#666; text-decoration:none; border-bottom:3px solid transparent; }
+.chapter-nav a:hover, .chapter-nav a.active { color:var(--navy); border-bottom-color:var(--gold); }
+.content-wrap { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
+.chapter-title { font-family:'Rajdhani',sans-serif; font-size:1.5rem; font-weight:700; color:var(--navy); border-left:4px solid var(--gold); padding-left:14px; margin-bottom:20px; }
+.section-head { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:2px; margin:24px 0 10px; padding-bottom:6px; border-bottom:1px solid #e0d8c0; }
+p { font-size:0.93rem; line-height:1.75; color:#333; margin-bottom:12px; }
+.note-box { background:#fff8e1; border-left:4px solid var(--gold); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:0.9rem; }
+table.notes-table { width:100%; border-collapse:collapse; font-size:0.88rem; margin:16px 0; }
+.notes-table th { background:var(--navy); color:var(--gold); padding:9px 14px; text-align:left; font-family:'Rajdhani',sans-serif; letter-spacing:1px; }
+.notes-table td { padding:9px 14px; border-bottom:1px solid #eee; vertical-align:top; }
+.notes-table tr:hover td { background:#faf6ec; }
+.point-list { list-style:none; padding:0; margin:10px 0; }
+.point-list li { padding:6px 0 6px 24px; position:relative; font-size:0.9rem; color:#333; border-bottom:1px solid #f0ece0; }
+.point-list li::before { content:'▸'; position:absolute; left:0; color:var(--gold); }
+.chapter-section { display:none; }
+.chapter-section.active { display:block; }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="container d-flex align-items-center justify-content-between gap-3 flex-wrap">
+    <a href="navy-wing.html" class="back-btn"><i class="fas fa-arrow-left me-2"></i>Back to Navy Wing</a>
+    <h1><i class="fas fa-anchor me-2" style="color:var(--gold)"></i>NCC NAVY SYLLABUS NOTES</h1>
+    <button class="dl-btn" onclick="window.print()"><i class="fas fa-print me-2"></i>Print / Save PDF</button>
+  </div>
+</div>
+<div class="chapter-nav">
+  <a href="#" class="active" onclick="showChapter('ch1',this)">1. NCC &amp; Navy Intro</a>
+  <a href="#" onclick="showChapter('ch2',this)">2. Seamanship</a>
+  <a href="#" onclick="showChapter('ch3',this)">3. Navigation</a>
+  <a href="#" onclick="showChapter('ch4',this)">4. Ship Knowledge</a>
+  <a href="#" onclick="showChapter('ch5',this)">5. Boat Pulling</a>
+  <a href="#" onclick="showChapter('ch6',this)">6. Naval Drill</a>
+  <a href="#" onclick="showChapter('ch7',this)">7. First Aid</a>
+</div>
+<div class="content-wrap">
+
+  <div id="ch1" class="chapter-section active">
+    <div class="chapter-title">Chapter 1 — NCC &amp; Indian Navy Introduction</div>
+    <div class="section-head">NCC Navy Wing</div>
+    <p>The NCC Naval Wing trains cadets in seamanship, navigation and naval discipline. It is administered by the Indian Navy and provides cadets hands-on training in water activities and maritime skills.</p>
+    <div class="section-head">Indian Navy — Key Facts</div>
+    <table class="notes-table">
+      <thead><tr><th>Detail</th><th>Information</th></tr></thead>
+      <tbody>
+        <tr><td>Founded</td><td>26 January 1950</td></tr>
+        <tr><td>HQ</td><td>Integrated HQ of MoD (Navy), New Delhi</td></tr>
+        <tr><td>Chief of Naval Staff</td><td>Admiral (current)</td></tr>
+        <tr><td>Motto</td><td>"Sha No Varuna" (May Varuna be auspicious to us)</td></tr>
+        <tr><td>Branches</td><td>Executive, Engineering, Electrical, Medical, Education</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">NCC Navy Ranks</div>
+    <table class="notes-table">
+      <thead><tr><th>NCC Rank</th><th>Equivalent Indian Navy</th></tr></thead>
+      <tbody>
+        <tr><td>Cadet</td><td>Ordinary Seaman</td></tr>
+        <tr><td>Leading Cadet</td><td>Leading Seaman</td></tr>
+        <tr><td>Petty Officer Cadet</td><td>Petty Officer</td></tr>
+        <tr><td>Chief Petty Officer Cadet</td><td>Chief Petty Officer</td></tr>
+        <tr><td>Under Officer</td><td>Sub Lieutenant</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="ch2" class="chapter-section">
+    <div class="chapter-title">Chapter 2 — Seamanship</div>
+    <div class="section-head">Knots &amp; Their Uses</div>
+    <table class="notes-table">
+      <thead><tr><th>Knot</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Reef Knot</td><td>Joining two ropes of same thickness</td></tr>
+        <tr><td>Bowline</td><td>Making a fixed loop at end of rope — most useful knot</td></tr>
+        <tr><td>Clove Hitch</td><td>Fastening rope to a spar or post quickly</td></tr>
+        <tr><td>Round Turn &amp; Two Half Hitches</td><td>Securing rope to a ring or post securely</td></tr>
+        <tr><td>Sheet Bend</td><td>Joining two ropes of different thickness</td></tr>
+        <tr><td>Figure of Eight</td><td>Stopper knot — prevents rope slipping through block</td></tr>
+        <tr><td>Rolling Hitch</td><td>Attaching a rope to another under strain</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Parts of a Rope</div>
+    <ul class="point-list">
+      <li><strong>Bight</strong> — curved part of a rope between two ends</li>
+      <li><strong>Standing Part</strong> — part of rope not used in making knot</li>
+      <li><strong>Working End</strong> — free end used to make the knot</li>
+      <li><strong>Loop</strong> — circular shape formed in rope</li>
+    </ul>
+    <div class="note-box"><strong>Remember:</strong> The <strong>Bowline</strong> is called the "King of Knots" — it creates a fixed loop that does not slip or jam.</div>
+  </div>
+
+  <div id="ch3" class="chapter-section">
+    <div class="chapter-title">Chapter 3 — Navigation</div>
+    <div class="section-head">Basic Navigation Terms</div>
+    <table class="notes-table">
+      <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Bearing</td><td>Direction of an object measured in degrees from North (0°–360°)</td></tr>
+        <tr><td>Course</td><td>Direction in which a vessel is steered</td></tr>
+        <tr><td>Heading</td><td>Direction the ship's bow is pointing</td></tr>
+        <tr><td>Knot</td><td>Unit of speed = 1 nautical mile per hour</td></tr>
+        <tr><td>Nautical Mile</td><td>1852 metres = 1.15 statute miles</td></tr>
+        <tr><td>Fathom</td><td>Unit of depth = 6 feet = 1.83 metres</td></tr>
+        <tr><td>Port</td><td>Left side of ship (when facing forward)</td></tr>
+        <tr><td>Starboard</td><td>Right side of ship (when facing forward)</td></tr>
+        <tr><td>Bow</td><td>Front of the ship</td></tr>
+        <tr><td>Stern</td><td>Rear of the ship</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Types of Navigation</div>
+    <ul class="point-list">
+      <li><strong>Dead Reckoning</strong> — calculating position using last known position + speed + direction + time</li>
+      <li><strong>Celestial Navigation</strong> — using stars, sun, moon to determine position</li>
+      <li><strong>Coastal Navigation</strong> — using landmarks and charts</li>
+      <li><strong>Electronic Navigation</strong> — using GPS, RADAR, SONAR</li>
+    </ul>
+  </div>
+
+  <div id="ch4" class="chapter-section">
+    <div class="chapter-title">Chapter 4 — Ship Knowledge</div>
+    <div class="section-head">Main Parts of a Ship</div>
+    <table class="notes-table">
+      <thead><tr><th>Part</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Hull</td><td>Main body/shell of the ship</td></tr>
+        <tr><td>Keel</td><td>Bottom-most structural element running bow to stern</td></tr>
+        <tr><td>Deck</td><td>Floor of the ship</td></tr>
+        <tr><td>Bridge</td><td>Command centre — navigation and control</td></tr>
+        <tr><td>Engine Room</td><td>Houses propulsion machinery</td></tr>
+        <tr><td>Anchor</td><td>Heavy weight to hold ship in position</td></tr>
+        <tr><td>Rudder</td><td>Controls direction of the ship</td></tr>
+        <tr><td>Propeller</td><td>Drives the ship forward/backward</td></tr>
+        <tr><td>Mast</td><td>Vertical pole — carries lights, flags, radar</td></tr>
+        <tr><td>Funnel</td><td>Exhaust pipe for engine gases</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Types of Navy Vessels</div>
+    <ul class="point-list">
+      <li><strong>Aircraft Carrier</strong> — floating airbase (INS Vikrant, INS Vikramaditya)</li>
+      <li><strong>Destroyer</strong> — fast warship for attack and escort</li>
+      <li><strong>Frigate</strong> — medium warship for multi-purpose roles</li>
+      <li><strong>Submarine</strong> — underwater vessel (INS Arihant — nuclear)</li>
+      <li><strong>Patrol Vessel</strong> — coastal patrol and surveillance</li>
+      <li><strong>Landing Ship</strong> — transports troops and equipment</li>
+    </ul>
+  </div>
+
+  <div id="ch5" class="chapter-section">
+    <div class="chapter-title">Chapter 5 — Boat Pulling</div>
+    <div class="section-head">Parts of a Pulling Boat</div>
+    <ul class="point-list">
+      <li><strong>Thwart</strong> — seat for rowers</li>
+      <li><strong>Rowlock (Crutch)</strong> — U-shaped fitting for oar</li>
+      <li><strong>Oar</strong> — rowing implement (blade + shaft + handle)</li>
+      <li><strong>Tiller</strong> — lever to control rudder</li>
+      <li><strong>Cox (Coxswain)</strong> — person who steers and gives commands</li>
+      <li><strong>Stroke</strong> — rower sitting nearest to cox, sets the pace</li>
+      <li><strong>Bow</strong> — rower at front of boat</li>
+    </ul>
+    <div class="section-head">Boat Pulling Commands</div>
+    <table class="notes-table">
+      <thead><tr><th>Command</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Out Oars</td><td>Place oars in rowlocks</td></tr>
+        <tr><td>Give Way Together</td><td>Start rowing together</td></tr>
+        <tr><td>Easy All</td><td>Stop rowing — hold oars horizontal</td></tr>
+        <tr><td>Oars</td><td>Hold oars horizontal over water</td></tr>
+        <tr><td>Boat Oars</td><td>Bring oars into boat</td></tr>
+        <tr><td>Back Water</td><td>Row backward to slow or reverse</td></tr>
+        <tr><td>Stand By to Fend Off</td><td>Prepare to push away from obstacle</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><strong>Safety:</strong> All cadets must wear life jackets during boat pulling exercises. Never stand in a boat unless instructed.</div>
+  </div>
+
+  <div id="ch6" class="chapter-section">
+    <div class="chapter-title">Chapter 6 — Naval Drill</div>
+    <div class="section-head">Naval Drill vs Army Drill</div>
+    <p>Naval drill follows similar principles to Army drill but has some differences in terminology and procedure.</p>
+    <table class="notes-table">
+      <thead><tr><th>Army Command</th><th>Naval Equivalent</th></tr></thead>
+      <tbody>
+        <tr><td>Savdhan</td><td>Attention</td></tr>
+        <tr><td>Vishram</td><td>Stand at Ease</td></tr>
+        <tr><td>Tej Chal</td><td>Quick March</td></tr>
+        <tr><td>Thehro</td><td>Halt</td></tr>
+        <tr><td>Dahine Mud</td><td>Right Turn</td></tr>
+        <tr><td>Peeche Mud</td><td>About Turn</td></tr>
+      </tbody>
+    </table>
+    <div class="section-head">Saluting in Navy</div>
+    <ul class="point-list">
+      <li>Same hand salute as Army — right hand to forehead</li>
+      <li>Additional: salute the Quarterdeck when boarding/leaving ship</li>
+      <li>Salute when National Anthem is played</li>
+      <li>Officers saluted on first meeting of the day</li>
+    </ul>
+  </div>
+
+  <div id="ch7" class="chapter-section">
+    <div class="chapter-title">Chapter 7 — First Aid</div>
+    <div class="section-head">Water Safety &amp; Drowning</div>
+    <p>For naval cadets, water safety is critical. A drowning person must be rescued promptly.</p>
+    <ul class="point-list">
+      <li>Reach — extend arm, pole, rope from shore</li>
+      <li>Throw — throw life ring, rope, floating object</li>
+      <li>Row — go in a boat — do NOT swim to victim unless trained</li>
+      <li>Go — only trained lifeguards should enter water</li>
+    </ul>
+    <div class="section-head">Treatment of Near-Drowning</div>
+    <ul class="point-list">
+      <li>Remove victim from water safely</li>
+      <li>Check for breathing — tilt head, lift chin</li>
+      <li>If not breathing — start CPR immediately</li>
+      <li>30 compressions : 2 rescue breaths</li>
+      <li>Keep victim warm — prevent hypothermia</li>
+      <li>Send for medical help immediately</li>
+    </ul>
+    <div class="note-box"><strong>Important:</strong> Never enter water to save a drowning person unless you are a trained lifeguard. You may become a victim yourself.</div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showChapter(id, el) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.chapter-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  return false;
+}
+</script>
+</body>
+</html>

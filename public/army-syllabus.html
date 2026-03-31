@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NCC Army Syllabus Notes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root { --navy:#001f3f; --gold:#c9a84c; --cream:#faf6ec; }
+body { font-family:'Barlow',sans-serif; background:var(--cream); }
+.top-bar { background:var(--navy); border-bottom:3px solid var(--gold); padding:12px 0; }
+.top-bar .back-btn { color:var(--gold); text-decoration:none; font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:1px; font-size:0.9rem; }
+.top-bar .back-btn:hover { color:#fff; }
+.top-bar h1 { color:#fff; font-family:'Rajdhani',sans-serif; font-size:1.2rem; font-weight:700; letter-spacing:2px; margin:0; }
+.top-bar .dl-btn { background:var(--gold); color:var(--navy); border:none; border-radius:6px; padding:8px 20px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:0.88rem; letter-spacing:1px; cursor:pointer; }
+.top-bar .dl-btn:hover { background:#e8c96f; }
+.chapter-nav { background:#fff; border-bottom:2px solid #e0d8c0; padding:0; overflow-x:auto; white-space:nowrap; }
+.chapter-nav a { display:inline-block; padding:10px 18px; font-family:'Rajdhani',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#666; text-decoration:none; border-bottom:3px solid transparent; }
+.chapter-nav a:hover, .chapter-nav a.active { color:var(--navy); border-bottom-color:var(--gold); }
+.content-wrap { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
+.chapter-title { font-family:'Rajdhani',sans-serif; font-size:1.5rem; font-weight:700; color:var(--navy); border-left:4px solid var(--gold); padding-left:14px; margin-bottom:20px; }
+.section-head { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:2px; margin:24px 0 10px; padding-bottom:6px; border-bottom:1px solid #e0d8c0; }
+p { font-size:0.93rem; line-height:1.75; color:#333; margin-bottom:12px; }
+.note-box { background:#fff8e1; border-left:4px solid var(--gold); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0; font-size:0.9rem; }
+.note-box strong { color:var(--navy); }
+table.notes-table { width:100%; border-collapse:collapse; font-size:0.88rem; margin:16px 0; }
+.notes-table th { background:var(--navy); color:var(--gold); padding:9px 14px; text-align:left; font-family:'Rajdhani',sans-serif; letter-spacing:1px; }
+.notes-table td { padding:9px 14px; border-bottom:1px solid #eee; }
+.notes-table tr:hover td { background:#faf6ec; }
+.point-list { list-style:none; padding:0; margin:10px 0; }
+.point-list li { padding:6px 0 6px 24px; position:relative; font-size:0.9rem; color:#333; border-bottom:1px solid #f0ece0; }
+.point-list li::before { content:'▸'; position:absolute; left:0; color:var(--gold); font-size:0.85rem; }
+.chapter-section { display:none; }
+.chapter-section.active { display:block; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container d-flex align-items-center justify-content-between gap-3 flex-wrap">
+    <a href="army-wing.html" class="back-btn"><i class="fas fa-arrow-left me-2"></i>Back to Army Wing</a>
+    <h1><i class="fas fa-book-open me-2" style="color:var(--gold)"></i>NCC ARMY SYLLABUS NOTES</h1>
+    <button class="dl-btn" onclick="window.print()"><i class="fas fa-print me-2"></i>Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="chapter-nav">
+  <a href="#" class="active" onclick="showChapter('ch1',this)">1. NCC Introduction</a>
+  <a href="#" onclick="showChapter('ch2',this)">2. Drill</a>
+  <a href="#" onclick="showChapter('ch3',this)">3. Weapon Training</a>
+  <a href="#" onclick="showChapter('ch4',this)">4. Map Reading</a>
+  <a href="#" onclick="showChapter('ch5',this)">5. Field Craft</a>
+  <a href="#" onclick="showChapter('ch6',this)">6. First Aid</a>
+  <a href="#" onclick="showChapter('ch7',this)">7. Army Organisation</a>
+  <a href="#" onclick="showChapter('ch8',this)">8. Leadership</a>
+</div>
+
+<div class="content-wrap">
+
+  <!-- CHAPTER 1 -->
+  <div id="ch1" class="chapter-section active">
+    <div class="chapter-title">Chapter 1 — Introduction to NCC</div>
+    <div class="section-head">History of NCC</div>
+    <p>The National Cadet Corps (NCC) was established on <strong>16 April 1948</strong> under the NCC Act of 1948. It was formed on the recommendation of the Pantulu Committee. NCC is the tri-services organisation comprising the Army, Navy and Air Force.</p>
+    <p>NCC has its headquarters in <strong>New Delhi</strong> and is under the Ministry of Defence, Government of India. The motto of NCC is <strong>"Unity and Discipline"</strong>.</p>
+    <div class="note-box"><strong>Important:</strong> NCC Day is celebrated on the <strong>4th Sunday of November</strong> every year.</div>
+
+    <div class="section-head">Aim of NCC</div>
+    <ul class="point-list">
+      <li>To develop qualities of character, courage, comradeship, discipline, leadership, secular outlook, spirit of adventure and ideals of selfless service among young citizens.</li>
+      <li>To create a pool of organised, trained and motivated youth with leadership qualities in all walks of life.</li>
+      <li>To provide a suitable environment to motivate youth to take up a career in the armed forces.</li>
+    </ul>
+
+    <div class="section-head">NCC Pledge</div>
+    <div class="note-box">
+      <strong>"We, the cadets of the National Cadet Corps, do solemnly pledge that we shall always uphold the unity of India. We resolve to be disciplined and responsible citizens of our nation. We shall undertake positive community service in the spirit of dedication and we shall endeavour to make our country prosperous and great."</strong>
+    </div>
+
+    <div class="section-head">Certificate Levels</div>
+    <table class="notes-table">
+      <thead><tr><th>Certificate</th><th>Class</th><th>Duration</th><th>Exam</th></tr></thead>
+      <tbody>
+        <tr><td>A Certificate</td><td>Class 8–10</td><td>2 Years</td><td>Class 10 level</td></tr>
+        <tr><td>B Certificate</td><td>Class 11–12</td><td>2 Years</td><td>Class 12 level</td></tr>
+        <tr><td>C Certificate</td><td>College 1st–3rd Year</td><td>3 Years</td><td>College level</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">NCC Ranks — Army Wing</div>
+    <table class="notes-table">
+      <thead><tr><th>Rank</th><th>Hindi</th></tr></thead>
+      <tbody>
+        <tr><td>Cadet</td><td>कैडेट</td></tr>
+        <tr><td>Lance Corporal</td><td>लांस कॉर्पोरल</td></tr>
+        <tr><td>Corporal</td><td>कॉर्पोरल</td></tr>
+        <tr><td>Sergeant</td><td>सार्जेंट</td></tr>
+        <tr><td>Under Officer (UO)</td><td>अंडर ऑफिसर</td></tr>
+        <tr><td>Senior Under Officer (SUO)</td><td>सीनियर अंडर ऑफिसर</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div id="ch2" class="chapter-section">
+    <div class="chapter-title">Chapter 2 — Drill</div>
+    <div class="section-head">Importance of Drill</div>
+    <p>Drill is the foundation of military training. It develops discipline, smartness, punctuality and obedience. It teaches cadets to act promptly on orders and builds team spirit.</p>
+
+    <div class="section-head">Basic Drill Commands</div>
+    <table class="notes-table">
+      <thead><tr><th>Command (English)</th><th>Hindi</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Savdhan</td><td>सावधान</td><td>Attention — heels together, toes at 45°, arms straight</td></tr>
+        <tr><td>Vishram</td><td>विश्राम</td><td>Stand at ease — left foot 12" apart, hands behind back</td></tr>
+        <tr><td>Araam Se</td><td>आराम से</td><td>Stand easy — relax but stay in place</td></tr>
+        <tr><td>Dahine Mud</td><td>दाहिने मुड</td><td>Right turn — 90° turn to right</td></tr>
+        <tr><td>Baen Mud</td><td>बाएं मुड</td><td>Left turn — 90° turn to left</td></tr>
+        <tr><td>Peeche Mud</td><td>पीछे मुड</td><td>About turn — 180° turn to right</td></tr>
+        <tr><td>Tej Chal</td><td>तेज चल</td><td>Quick march — step off with left foot</td></tr>
+        <tr><td>Dheere Chal</td><td>धीरे चल</td><td>Slow march — 70 paces per minute</td></tr>
+        <tr><td>Thehro</td><td>ठहरो</td><td>Halt — stop marching</td></tr>
+        <tr><td>Salute</td><td>सलूट</td><td>Pay compliments to officer/flag</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">Paces of March</div>
+    <ul class="point-list">
+      <li>Quick March — 120 paces per minute, 30 inches per pace</li>
+      <li>Slow March — 70 paces per minute, 30 inches per pace</li>
+      <li>Double March — 180 paces per minute</li>
+    </ul>
+    <div class="note-box"><strong>Remember:</strong> Always step off with the <strong>LEFT foot</strong> when marching. The command "Tej Chal" is given when the left foot is on the ground.</div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div id="ch3" class="chapter-section">
+    <div class="chapter-title">Chapter 3 — Weapon Training</div>
+    <div class="section-head">.22 Rifle — Parts</div>
+    <ul class="point-list">
+      <li>Butt — shoulder rest part of rifle</li>
+      <li>Barrel — the long metal tube through which bullet travels</li>
+      <li>Trigger — mechanism that fires the weapon</li>
+      <li>Magazine — stores ammunition (holds 10 rounds)</li>
+      <li>Foresight — front aiming component</li>
+      <li>Backsight — rear aiming component</li>
+      <li>Bolt — used to load and eject cartridges</li>
+      <li>Safety Catch — prevents accidental firing</li>
+    </ul>
+
+    <div class="section-head">Golden Rules of Weapon Safety</div>
+    <div class="note-box">
+      <strong>Rule 1:</strong> Treat every weapon as if it is loaded.<br/>
+      <strong>Rule 2:</strong> Never point a weapon at anyone unless you intend to shoot.<br/>
+      <strong>Rule 3:</strong> Keep finger off the trigger until ready to fire.<br/>
+      <strong>Rule 4:</strong> Be sure of your target and what is beyond it.
+    </div>
+
+    <div class="section-head">Firing Positions</div>
+    <table class="notes-table">
+      <thead><tr><th>Position</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Standing</td><td>Erect position, weapon held at shoulder</td></tr>
+        <tr><td>Kneeling</td><td>Right knee on ground, left knee up</td></tr>
+        <tr><td>Prone (Lying)</td><td>Flat on ground, most stable position</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div id="ch4" class="chapter-section">
+    <div class="chapter-title">Chapter 4 — Map Reading</div>
+    <div class="section-head">What is a Map?</div>
+    <p>A map is a <strong>flat representation of the earth's surface</strong> drawn to a certain scale. Maps are used in military operations for planning, navigation and communication of positions.</p>
+
+    <div class="section-head">Types of Maps</div>
+    <ul class="point-list">
+      <li>Topographic Map — shows natural and man-made features</li>
+      <li>Road Map — shows roads, highways and routes</li>
+      <li>Political Map — shows boundaries and capitals</li>
+      <li>Physical Map — shows terrain, rivers, mountains</li>
+    </ul>
+
+    <div class="section-head">Map Scale</div>
+    <table class="notes-table">
+      <thead><tr><th>Scale</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>1:25,000</td><td>Detailed tactical use</td></tr>
+        <tr><td>1:50,000</td><td>Standard military map</td></tr>
+        <tr><td>1:1,00,000</td><td>Strategic planning</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">Compass — Parts &amp; Use</div>
+    <ul class="point-list">
+      <li>North is always 0° or 360°</li>
+      <li>East is 90°, South is 180°, West is 270°</li>
+      <li>Grid bearing — angle measured from Grid North</li>
+      <li>Magnetic bearing — angle measured from Magnetic North</li>
+    </ul>
+    <div class="note-box"><strong>Formula:</strong> Grid Bearing = Magnetic Bearing ± Magnetic Variation</div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div id="ch5" class="chapter-section">
+    <div class="chapter-title">Chapter 5 — Field Craft &amp; Battle Craft</div>
+    <div class="section-head">Field Signals</div>
+    <table class="notes-table">
+      <thead><tr><th>Signal</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Arm raised vertically</td><td>Halt / Stop</td></tr>
+        <tr><td>Arm waved forward</td><td>Advance</td></tr>
+        <tr><td>Arm waved downward</td><td>Lie down / Take cover</td></tr>
+        <tr><td>Circular motion of arm</td><td>Assemble here</td></tr>
+        <tr><td>Pointing with index finger</td><td>Enemy spotted — direction</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">Methods of Movement</div>
+    <ul class="point-list">
+      <li>Walking — normal movement, used when no enemy threat</li>
+      <li>Crouching — low movement, reduced profile</li>
+      <li>Crawling (Leopard crawl) — very low, slowest but most concealed</li>
+      <li>Rolling — used to change position without raising body</li>
+    </ul>
+
+    <div class="section-head">Camouflage &amp; Concealment</div>
+    <p>Camouflage is the art of hiding oneself or equipment by blending with surroundings. The <strong>5 S's of camouflage</strong> are:</p>
+    <ul class="point-list">
+      <li><strong>Shape</strong> — break the outline of body/equipment</li>
+      <li><strong>Shine</strong> — avoid reflective surfaces</li>
+      <li><strong>Shadow</strong> — stay in shadows, avoid casting shadow</li>
+      <li><strong>Silhouette</strong> — never stand against sky</li>
+      <li><strong>Sound</strong> — move silently, avoid noise</li>
+    </ul>
+  </div>
+
+  <!-- CHAPTER 6 -->
+  <div id="ch6" class="chapter-section">
+    <div class="chapter-title">Chapter 6 — First Aid</div>
+    <div class="section-head">Definition</div>
+    <p>First Aid is the <strong>immediate and temporary treatment</strong> given to a casualty before proper medical treatment is available. It aims to preserve life, prevent the condition from worsening and promote recovery.</p>
+
+    <div class="section-head">Aims of First Aid (3 P's)</div>
+    <ul class="point-list">
+      <li><strong>Preserve Life</strong> — keep the casualty alive</li>
+      <li><strong>Prevent Deterioration</strong> — stop condition from getting worse</li>
+      <li><strong>Promote Recovery</strong> — help the casualty recover</li>
+    </ul>
+
+    <div class="section-head">DR ABC — Emergency Procedure</div>
+    <table class="notes-table">
+      <thead><tr><th>Letter</th><th>Stands For</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>D</td><td>Danger</td><td>Check for danger to yourself and casualty</td></tr>
+        <tr><td>R</td><td>Response</td><td>Check if casualty is conscious — shake shoulders</td></tr>
+        <tr><td>A</td><td>Airway</td><td>Open airway — tilt head back, lift chin</td></tr>
+        <tr><td>B</td><td>Breathing</td><td>Check for normal breathing — look, listen, feel</td></tr>
+        <tr><td>C</td><td>Circulation</td><td>Check pulse and control bleeding</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">Recovery Position</div>
+    <p>Place an unconscious but breathing casualty in the <strong>Recovery (Lateral) Position</strong> to keep airway clear and prevent choking on vomit.</p>
+    <div class="note-box"><strong>CPR Ratio:</strong> 30 compressions : 2 rescue breaths &nbsp;|&nbsp; Rate: 100–120 compressions per minute</div>
+  </div>
+
+  <!-- CHAPTER 7 -->
+  <div id="ch7" class="chapter-section">
+    <div class="chapter-title">Chapter 7 — Army Organisation</div>
+    <div class="section-head">Indian Army Structure</div>
+    <table class="notes-table">
+      <thead><tr><th>Formation</th><th>Strength (approx)</th><th>Commander</th></tr></thead>
+      <tbody>
+        <tr><td>Section</td><td>8–10 soldiers</td><td>Naik / Lance Naik</td></tr>
+        <tr><td>Platoon</td><td>30–40 soldiers</td><td>Lieutenant / JCO</td></tr>
+        <tr><td>Company</td><td>100–120 soldiers</td><td>Major</td></tr>
+        <tr><td>Battalion</td><td>800–1000 soldiers</td><td>Colonel</td></tr>
+        <tr><td>Brigade</td><td>3000–5000 soldiers</td><td>Brigadier</td></tr>
+        <tr><td>Division</td><td>10,000–15,000</td><td>Major General</td></tr>
+        <tr><td>Corps</td><td>20,000–45,000</td><td>Lieutenant General</td></tr>
+        <tr><td>Army</td><td>50,000+</td><td>General</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-head">Army Ranks — Officers</div>
+    <ul class="point-list">
+      <li>2nd Lieutenant → Lieutenant → Captain → Major → Lieutenant Colonel → Colonel → Brigadier → Major General → Lieutenant General → General → Field Marshal</li>
+    </ul>
+
+    <div class="section-head">Army Ranks — JCO &amp; OR</div>
+    <ul class="point-list">
+      <li>Naib Subedar → Subedar → Subedar Major (JCOs)</li>
+      <li>Sepoy → Lance Naik → Naik → Havildar → Naib Subedar (OR)</li>
+    </ul>
+  </div>
+
+  <!-- CHAPTER 8 -->
+  <div id="ch8" class="chapter-section">
+    <div class="chapter-title">Chapter 8 — Leadership</div>
+    <div class="section-head">Definition of Leadership</div>
+    <p>Leadership is the <strong>art of influencing and directing people</strong> to accomplish the mission. A good leader must have knowledge, willpower, initiative and integrity.</p>
+
+    <div class="section-head">Qualities of a Good Leader</div>
+    <ul class="point-list">
+      <li>Bearing — smart appearance and confident behaviour</li>
+      <li>Courage — physical and moral courage</li>
+      <li>Decisiveness — ability to make quick and correct decisions</li>
+      <li>Dependability — trusted by subordinates and seniors</li>
+      <li>Endurance — physical and mental stamina</li>
+      <li>Enthusiasm — positive energy and motivation</li>
+      <li>Initiative — self-starter, takes action without being told</li>
+      <li>Integrity — honesty and strong moral principles</li>
+      <li>Judgment — good decision making ability</li>
+      <li>Justice — fair treatment to all</li>
+      <li>Knowledge — professional expertise</li>
+      <li>Loyalty — faithful to the nation, unit and comrades</li>
+      <li>Tact — ability to deal with people diplomatically</li>
+      <li>Unselfishness — puts team before self</li>
+    </ul>
+
+    <div class="note-box"><strong>Remember:</strong> The three styles of leadership are — <strong>Authoritative, Democratic, and Laissez-faire</strong>.</div>
+  </div>
+
+</div><!-- content-wrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showChapter(id, el) {
+  document.querySelectorAll('.chapter-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.chapter-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  return false;
+}
+</script>
+</body>
+</html>

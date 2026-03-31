@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NCC Management System</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --army-dark:    #001f3f; /* Deep dark blue */
+  --army-green:   #003366; /* Dark navy blue */
+  --army-mid:     #004080; /* Blue gradient color */
+  --army-light:   #0059b3; /* Bright blue for accents */
+  /* Baaki variables same rahenge */
+  --gold:         #c9a84c;
+  --gold-light:   #e8c96f;
+  --gold-pale:    #f5e9c0;
+  --cream:        #faf6ec;
+  --text-dark:    #1a1a1a;
+  --text-muted:   #5a5a5a;
+  --border:       #d4c89a;
+  --error:        #c0392b;
+  --success:      #1e7e34;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--army-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── ANIMATED BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(42,90,50,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(20,50,24,0.7) 0%, transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.015) 60px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.015) 60px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── FLOATING PARTICLES ── */
+.particle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: drift linear infinite;
+  z-index: 0;
+}
+@keyframes drift {
+  0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0;   }
+  10%  { opacity: 0.4; }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── HEADER ── */
+.ncc-header {
+  position: relative; z-index: 10;
+  background: linear-gradient(135deg, var(--army-dark) 0%, var(--army-green) 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 18px 0;
+  text-align: center;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+.ncc-header::after {
+  content: '';
+  position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+  width: 120px; height: 3px;
+  background: var(--gold-light);
+  border-radius: 2px;
+}
+.header-emblem {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  border-radius: 50%;
+  margin-bottom: 8px;
+  box-shadow: 0 0 20px rgba(201,168,76,0.5);
+  font-size: 28px; color: var(--army-dark);
+}
+.header-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.header-sub {
+  font-size: 0.78rem; color: rgba(255,255,255,0.55);
+  letter-spacing: 4px; text-transform: uppercase; margin-top: 2px;
+}
+
+/* ── STEP NAV ── */
+.step-nav {
+  position: relative; z-index: 10;
+  display: flex; justify-content: center; gap: 0;
+  background: rgba(11,26,14,0.9);
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  overflow-x: auto;
+}
+.step-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 28px;
+  background: none; border: none;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.step-btn:hover { color: rgba(255,255,255,0.7); }
+.step-btn.active {
+  color: var(--gold-light);
+  border-bottom-color: var(--gold);
+}
+.step-btn.done { color: var(--army-light); }
+.step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  background: rgba(255,255,255,0.1);
+  transition: all 0.3s;
+}
+.step-btn.active .step-num { background: var(--gold); color: var(--army-dark); }
+.step-btn.done .step-num  { background: var(--army-light); color: white; }
+
+/* ── MAIN WRAPPER ── */
+.main-wrap {
+  position: relative; z-index: 5;
+  min-height: calc(100vh - 160px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 16px;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+  background: var(--cream);
+  border-radius: 18px;
+  overflow: hidden;
+  width: 100%; max-width: 860px;
+  box-shadow:
+    0 0 0 1px rgba(201,168,76,0.3),
+    0 25px 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(42,90,50,0.2);
+  animation: cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* ── CARD BANNER ── */
+.card-banner {
+  background: linear-gradient(135deg, var(--army-green) 0%, var(--army-mid) 100%);
+  padding: 28px 36px;
+  display: flex; align-items: center; gap: 18px;
+  position: relative; overflow: hidden;
+}
+.card-banner::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: rgba(201,168,76,0.08);
+  border-radius: 50%;
+}
+.card-banner::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.banner-icon {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--army-dark);
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(201,168,76,0.4);
+}
+.banner-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.5rem; font-weight: 700;
+  color: white; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.banner-sub { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+/* ── FORM BODY ── */
+.card-body-custom { padding: 36px; }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 28px 0 20px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: ''; flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border));
+}
+.section-divider::after {
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+.section-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--army-mid);
+  letter-spacing: 3px; text-transform: uppercase;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 7px;
+}
+.section-label i { color: var(--gold); font-size: 0.85rem; }
+
+/* ── PRIMARY KEY BADGE ── */
+.pk-field { position: relative; }
+.pk-badge {
+  position: absolute; top: -9px; right: 10px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  color: var(--army-dark);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 20px;
+  z-index: 2; white-space: nowrap;
+}
+
+/* ── LABELS ── */
+.form-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 6px; display: flex; align-items: center; gap: 5px;
+}
+.form-label .req { color: var(--error); }
+
+/* ── INPUTS ── */
+.form-control, .form-select {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem; color: var(--text-dark);
+  transition: all 0.25s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) inset;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--army-mid);
+  box-shadow: 0 0 0 3px rgba(45,90,52,0.12);
+  outline: none;
+  background: #fff;
+}
+.form-control.pk-input {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fffdf5, #fff8e1);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.05rem; font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--army-dark);
+}
+.form-control.pk-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+}
+.input-group-text {
+  background: linear-gradient(135deg, var(--army-green), var(--army-mid));
+  border: 1.5px solid var(--army-mid);
+  color: var(--gold-light);
+  border-radius: 9px 0 0 9px !important;
+  font-size: 0.9rem;
+}
+.input-group .form-control { border-radius: 0 9px 9px 0 !important; }
+.pass-group { position: relative; }
+.pass-group .form-control { padding-right: 44px; }
+.pass-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; padding: 4px; transition: color 0.2s;
+}
+.pass-toggle:hover { color: var(--army-mid); }
+
+/* ── INVALID ── */
+.form-control.is-invalid { border-color: var(--error); }
+.invalid-feedback { color: var(--error); font-size: 0.78rem; margin-top: 4px; }
+
+/* ── PHOTO UPLOAD ── */
+.photo-upload-area {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: white;
+  position: relative;
+}
+.photo-upload-area:hover {
+  border-color: var(--army-mid);
+  background: rgba(45,90,52,0.04);
+}
+.photo-upload-area input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+.photo-preview {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--gold);
+  display: none; margin: 0 auto 8px;
+}
+.upload-icon { font-size: 2rem; color: var(--army-light); margin-bottom: 6px; }
+.upload-text { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ── DOC UPLOAD CARDS ── */
+.doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+.doc-card {
+  border: 1.5px dashed var(--border);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  background: white;
+  position: relative;
+}
+.doc-card:hover { border-color: var(--army-mid); background: rgba(45,90,52,0.04); }
+.doc-card.uploaded { border-style: solid; border-color: var(--success); background: rgba(30,126,52,0.04); }
+.doc-card input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+.doc-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.doc-card:not(.uploaded) .doc-icon { color: var(--text-muted); }
+.doc-card.uploaded .doc-icon { color: var(--success); }
+.doc-name { font-size: 0.75rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+.doc-status { font-size: 0.7rem; color: var(--text-muted); }
+.doc-card.uploaded .doc-status { color: var(--success); }
+
+/* ── SUBMIT BUTTON ── */
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--army-green) 0%, var(--army-mid) 50%, var(--army-light) 100%);
+  background-size: 200% auto;
+  border: none; border-radius: 10px;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s;
+  box-shadow: 0 4px 20px rgba(45,90,52,0.35);
+  position: relative; overflow: hidden;
+}
+.btn-submit::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transition: left 0.5s;
+}
+.btn-submit:hover { background-position: right center; box-shadow: 0 6px 28px rgba(45,90,52,0.5); }
+.btn-submit:hover::after { left: 100%; }
+.btn-submit:active { transform: scale(0.99); }
+
+.btn-outline-army {
+  padding: 12px 28px;
+  background: transparent;
+  border: 2px solid var(--army-mid);
+  border-radius: 10px;
+  color: var(--army-mid);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.btn-outline-army:hover { background: var(--army-mid); color: white; }
+
+/* ── LINK TEXT ── */
+.form-footer-link {
+  text-align: center; margin-top: 22px;
+  font-size: 0.875rem; color: var(--text-muted);
+}
+.form-footer-link a {
+  color: var(--army-mid); font-weight: 600; text-decoration: none;
+}
+.form-footer-link a:hover { color: var(--army-light); text-decoration: underline; }
+
+/* ── ALERT ── */
+.alert-army {
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.875rem; display: flex; align-items: flex-start; gap: 10px;
+  animation: slideDown 0.3s ease both;
+}
+@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+.alert-army.success { background: rgba(30,126,52,0.1); border: 1px solid rgba(30,126,52,0.3); color: var(--success); }
+.alert-army.error   { background: rgba(192,57,43,0.09); border: 1px solid rgba(192,57,43,0.3);  color: var(--error); }
+
+/* ── STEP INDICATOR inside card ── */
+.step-indicator {
+  display: flex; justify-content: center; gap: 8px; margin-bottom: 28px;
+}
+.step-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border); transition: all 0.3s;
+}
+.step-dot.active { background: var(--gold); transform: scale(1.3); }
+.step-dot.done   { background: var(--army-light); }
+
+/* ── LOGIN DECORATIVE ── */
+.login-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  color: var(--army-dark); font-weight: 700;
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 6px;
+}
+
+/* ── SUCCESS MODAL ── */
+.success-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(11,26,14,0.85); backdrop-filter: blur(6px);
+  z-index: 1000; align-items: center; justify-content: center;
+}
+.success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.success-box {
+  background: var(--cream);
+  border-radius: 18px; padding: 50px 40px;
+  text-align: center; max-width: 420px; width: 90%;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes popIn { from{opacity:0;transform:scale(0.8)} to{opacity:1;transform:scale(1)} }
+.success-icon {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--army-green), var(--army-mid));
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 32px; color: var(--gold-light);
+  box-shadow: 0 8px 30px rgba(45,90,52,0.4);
+}
+.success-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.7rem; font-weight: 700;
+  color: var(--army-dark); letter-spacing: 2px;
+}
+.success-sub { font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; }
+.cadet-id-display {
+  background: linear-gradient(135deg, var(--army-dark), var(--army-green));
+  color: var(--gold-light);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 4px; padding: 14px 28px;
+  border-radius: 10px; margin: 16px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* ── DETAIL FORM TABS ── */
+.detail-tabs {
+  display: flex; gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px; overflow-x: auto;
+}
+.detail-tab {
+  padding: 10px 20px;
+  background: none; border: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-muted); cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px; transition: all 0.2s;
+  white-space: nowrap;
+}
+.detail-tab:hover { color: var(--army-mid); }
+.detail-tab.active { color: var(--army-mid); border-bottom-color: var(--gold); }
+
+.detail-section { display: none; }
+.detail-section.active { display: block; }
+
+/* ── RADIO CUSTOM ── */
+.radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+.radio-option {
+  flex: 1; min-width: 100px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px; cursor: pointer;
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--text-muted); transition: all 0.2s; background: white;
+}
+.radio-option input { display: none; }
+.radio-option.checked {
+  border-color: var(--army-mid);
+  background: rgba(45,90,52,0.07);
+  color: var(--army-mid); font-weight: 600;
+}
+.radio-option i { margin-right: 6px; }
+
+/* Progress bar */
+.form-progress { height: 4px; background: var(--border); margin-bottom: 0; border-radius: 0; }
+.form-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--army-mid), var(--gold));
+  border-radius: 0; transition: width 0.5s ease;
+}
+
+/* ── PHOTO BOX ── */
+.photo-box {
+  width: 110px; height: 130px;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; background: white;
+  transition: all 0.25s; position: relative;
+  overflow: hidden; flex-shrink: 0;
+}
+.photo-box:hover { border-color: var(--army-mid); background: rgba(0,64,128,0.03); }
+.photo-box.has-photo { border-style: solid; border-color: var(--gold); }
+.photo-box img { width:100%; height:100%; object-fit:cover; display:none; }
+.photo-box.has-photo img { display:block; }
+.photo-box.has-photo .photo-placeholder { display:none; }
+.photo-placeholder { text-align:center; padding:8px; pointer-events:none; }
+.photo-placeholder i { font-size:2rem; color:var(--border); display:block; margin-bottom:4px; }
+.photo-placeholder span { font-size:0.65rem; color:var(--text-muted); line-height:1.3; }
+.photo-box input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; }
+.photo-hover-btn {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(0,64,128,0.85); color:white;
+  font-size:0.65rem; text-align:center; padding:4px; display:none;
+}
+.photo-box.has-photo:hover .photo-hover-btn { display:block; }
+
+/* ── DET SECTION CARD ── */
+.det-section { border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:18px; }
+.det-section-hdr {
+  background: linear-gradient(135deg, var(--army-green) 0%, var(--army-mid) 100%);
+  padding:10px 18px; display:flex; align-items:center; gap:10px;
+}
+.det-section-hdr i  { color:var(--gold-light); font-size:0.88rem; }
+.det-section-hdr span {
+  font-family:'Rajdhani',sans-serif; font-size:0.78rem; font-weight:700;
+  color:white; letter-spacing:2px; text-transform:uppercase;
+}
+.det-section-bdy { padding:20px; background:white; }
+
+/* ── DECLARATION ── */
+.decl-box {
+  background:var(--gold-pale); border:1.5px solid var(--gold);
+  border-radius:10px; padding:16px 20px; margin-bottom:18px;
+}
+.decl-label { display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+.decl-label input[type="checkbox"] {
+  width:17px; height:17px; flex-shrink:0; margin-top:2px; accent-color:var(--army-mid);
+}
+.decl-label span { font-size:0.83rem; color:var(--text-dark); line-height:1.55; }
+
+/* Responsive */
+@media (max-width: 576px) {
+  .card-body-custom { padding: 22px 18px; }
+  .card-banner { padding: 20px 22px; }
+  .banner-title { font-size: 1.2rem; }
+  .doc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Header -->
+<header class="ncc-header">
+  <div class="header-emblem"><i class="fas fa-shield-halved"></i></div>
+  <div class="header-title">NCC Management System</div>
+  <div class="header-sub">National Cadet Corps &bull; Digital Portal</div>
+</header>
+
+<!-- Step Navigation -->
+<nav class="step-nav" id="stepNav">
+  <button class="step-btn active" id="stepBtn1" onclick="switchPage('register')">
+    <span class="step-num">1</span> Registration
+  </button>
+  <button class="step-btn" id="stepBtn2" onclick="switchPage('login')">
+    <span class="step-num">2</span> Login
+  </button>
+  <button class="step-btn" id="stepBtn3" onclick="switchPage('details')">
+    <span class="step-num">3</span> Cadet Details
+  </button>
+</nav>
+
+<!-- Progress bar -->
+<div class="form-progress"><div class="form-progress-bar" id="progressBar" style="width:33%"></div></div>
+
+<!-- ===================== MAIN WRAPPER ===================== -->
+<div class="main-wrap">
+
+  <!-- ===== PAGE 1: REGISTRATION ===== -->
+  <div id="page-register" class="form-card">
+    <div class="card-banner">
+      <div class="banner-icon"><i class="fas fa-user-plus"></i></div>
+      <div>
+        <div class="banner-title">Cadet Registration</div>
+        <div class="banner-sub">Create your NCC portal account</div>
+      </div>
+    </div>
+
+    <div class="card-body-custom">
+      <div id="regAlert"></div>
+
+      <!-- CADET ID -->
+      <div class="section-divider"><span class="section-label"><i class="fas fa-key"></i> Primary Identifier</span></div>
+      <div class="pk-field mb-4">
+        <span class="pk-badge"><i class="fas fa-key"></i> Primary Key</span>
+        <label class="form-label">Cadet ID <span class="req">*</span></label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+          <input type="text" id="reg_cadetId" class="form-control pk-input"
+                 placeholder="e.g. NCC2024001" maxlength="15"
+                 oninput="this.value=this.value.toUpperCase()" required/>
+        </div>
+        <div class="invalid-feedback" id="cadetIdErr"></div>
+        <div style="font-size:0.73rem;color:var(--text-muted);margin-top:5px">
+          <i class="fas fa-info-circle"></i> Unique identifier – used to login. Format: NCC + Year + Number
+        </div>
+      </div>
+
+      <!-- NAME -->
+      <div class="section-divider"><span class="section-label"><i class="fas fa-user"></i> Personal Information</span></div>
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label">First Name <span class="req">*</span></label>
+          <input type="text" id="reg_firstName" class="form-control" placeholder="Arjun" required/>
+          <div class="invalid-feedback" id="firstNameErr"></div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Middle Name</label>
+          <input type="text" id="reg_middleName" class="form-control" placeholder="Kumar"/>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Last Name <span class="req">*</span></label>
+          <input type="text" id="reg_lastName" class="form-control" placeholder="Singh" required/>
+          <div class="invalid-feedback" id="lastNameErr"></div>
+        </div>
+      </div>
+
+      <!-- CONTACT & BN -->
+      <div class="section-divider"><span class="section-label"><i class="fas fa-phone"></i> Contact & Unit</span></div>
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Phone Number <span class="req">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+            <input type="tel" id="reg_phone" class="form-control" placeholder="9876543210" maxlength="10" required/>
+          </div>
+          <div class="invalid-feedback" id="phoneErr"></div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">BN Code (Battalion) <span class="req">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-building-columns"></i></span>
+            <input type="text" id="reg_bnCode" class="form-control pk-input"
+                   placeholder="e.g. 1UPBN" maxlength="10"
+                   oninput="this.value=this.value.toUpperCase()" required/>
+          </div>
+          <div class="invalid-feedback" id="bnCodeErr"></div>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="section-divider"><span class="section-label"><i class="fas fa-lock"></i> Security</span></div>
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label class="form-label">Password <span class="req">*</span></label>
+          <div class="pass-group">
+            <input type="password" id="reg_password" class="form-control" placeholder="Min 8 characters" required/>
+            <button type="button" class="pass-toggle" onclick="togglePass('reg_password',this)"><i class="fas fa-eye"></i></button>
+          </div>
+          <div id="passStrength" style="margin-top:6px;font-size:0.72rem;"></div>
+          <div class="invalid-feedback" id="passwordErr"></div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Confirm Password <span class="req">*</span></label>
+          <div class="pass-group">
+            <input type="password" id="reg_confirmPassword" class="form-control" placeholder="Repeat password" required/>
+            <button type="button" class="pass-toggle" onclick="togglePass('reg_confirmPassword',this)"><i class="fas fa-eye"></i></button>
+          </div>
+          <div class="invalid-feedback" id="confirmPassErr"></div>
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="submitRegistration()">
+        <i class="fas fa-user-plus me-2"></i> Register &amp; Continue
+      </button>
+
+      <div class="form-footer-link">
+        Already registered? <a href="#" onclick="switchPage('login')">Login here</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 2: LOGIN ===== -->
+  <div id="page-login" class="form-card" style="display:none; max-width:500px;">
+    <div class="card-banner">
+      <div class="banner-icon"><i class="fas fa-right-to-bracket"></i></div>
+      <div>
+        <div class="banner-title">Cadet Login</div>
+        <div class="banner-sub">Access your NCC portal</div>
+      </div>
+    </div>
+
+    <div class="card-body-custom">
+      <div style="text-align:center;margin-bottom:26px">
+        <div class="login-badge"><i class="fas fa-shield-halved"></i> Secure Login</div>
+        <p style="font-size:0.85rem;color:var(--text-muted)">Use your registered Cadet ID, BN Code and Password</p>
+      </div>
+
+      <div id="loginAlert"></div>
+
+      <!-- CADET ID - Primary Key -->
+      <div class="pk-field mb-4">
+        <span class="pk-badge"><i class="fas fa-key"></i> Primary Key</span>
+        <label class="form-label">Cadet ID <span class="req">*</span></label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-id-badge"></i></span>
+          <input type="text" id="login_cadetId" class="form-control pk-input"
+                 placeholder="NCC2024001" oninput="this.value=this.value.toUpperCase()"/>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">BN Code <span class="req">*</span></label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-building-columns"></i></span>
+          <input type="text" id="login_bnCode" class="form-control"
+                 placeholder="1UPBN" oninput="this.value=this.value.toUpperCase()"/>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Password <span class="req">*</span></label>
+        <div class="pass-group">
+          <input type="password" id="login_password" class="form-control" placeholder="Your password"/>
+          <button type="button" class="pass-toggle" onclick="togglePass('login_password',this)"><i class="fas fa-eye"></i></button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <label style="display:flex;align-items:center;gap:7px;font-size:0.85rem;cursor:pointer">
+          <input type="checkbox" id="rememberMe" style="accent-color:var(--army-mid);width:15px;height:15px"/> Remember me
+        </label>
+        <a href="#" style="font-size:0.83rem;color:var(--army-mid);text-decoration:none;">Forgot password?</a>
+      </div>
+
+      <button class="btn-submit" onclick="submitLogin()">
+        <i class="fas fa-right-to-bracket me-2"></i> Login to Portal
+      </button>
+
+      <div class="form-footer-link">
+        New cadet? <a href="#" onclick="switchPage('register')">Register here</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== PAGE 3: CADET DETAILS ===== -->
+  <!-- ===== PAGE 3: CADET DETAILS ===== -->
+  <div id="page-details" class="form-card" style="display:none; max-width:900px;">
+    <div class="card-banner">
+      <div class="banner-icon"><i class="fas fa-id-card"></i></div>
+      <div>
+        <div class="banner-title">Cadet Detail Form</div>
+        <div class="banner-sub">Complete your full NCC cadet profile</div>
+      </div>
+    </div>
+    <div class="card-body-custom">
+      <div id="detailAlert"></div>
+
+      <!-- 1. PHOTO + PRIMARY IDENTITY -->
+      <div class="det-section">
+        <div class="det-section-hdr"><i class="fas fa-camera"></i><span>Photo &amp; Primary Identity</span></div>
+        <div class="det-section-bdy">
+          <div class="d-flex gap-4 align-items-start flex-wrap">
+            <div>
+              <label class="form-label">Passport Photo <span class="req">*</span></label>
+              <div class="photo-box" id="photoBox" onclick="document.getElementById('det_photoInput').click()">
+                <input type="file" id="det_photoInput" accept="image/jpeg,image/png,image/jpg" onchange="handlePhotoUpload(this)"/>
+                <img id="det_photoPreview" src="" alt=""/>
+                <div class="photo-placeholder"><i class="fas fa-user-tie"></i><span>Click to<br/>Upload<br/>Photo</span></div>
+                <div class="photo-hover-btn"><i class="fas fa-camera"></i> Change</div>
+              </div>
+              <div style="font-size:0.65rem;color:var(--text-muted);margin-top:5px;text-align:center">JPG/PNG &middot; Max 2MB<br/>Passport size</div>
+              <div class="invalid-feedback" id="det_photoErr" style="display:none;text-align:center;"></div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="pk-field">
+                    <span class="pk-badge"><i class="fas fa-key"></i> Primary Key</span>
+                    <label class="form-label">BN Code <span class="req">*</span></label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-building-columns"></i></span>
+                      <input type="text" id="det_bnCode" class="form-control pk-input" placeholder="e.g. 1MAH BN" maxlength="15" oninput="this.value=this.value.toUpperCase()"/>
+                    </div>
+                    <div class="invalid-feedback" id="det_bnCodeErr"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Mobile No <span class="req">*</span></label>
+                  <div class="input-group"><span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="tel" id="det_mobile" class="form-control" placeholder="10-digit mobile" maxlength="10"/>
+                  </div>
+                  <div class="invalid-feedback" id="det_mobileErr"></div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">NCC Unit Name</label>
+                  <div class="input-group"><span class="input-group-text"><i class="fas fa-flag"></i></span>
+                    <input type="text" id="det_unitName" class="form-control" placeholder="e.g. 1 MAH NU NCC"/>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Group Headquarters</label>
+                  <div class="input-group"><span class="input-group-text"><i class="fas fa-landmark"></i></span>
+                    <input type="text" id="det_groupHQ" class="form-control" placeholder="e.g. Pune Group HQ"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. PERSONAL INFORMATION -->
+      <div class="det-section">
+        <div class="det-section-hdr"><i class="fas fa-user"></i><span>Personal Information</span></div>
+        <div class="det-section-bdy">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Date of Birth <span class="req">*</span></label>
+              <div class="d-flex gap-2">
+                <select id="dob_day" class="form-select" onchange="assembleDOB()"><option value="">Day</option></select>
+                <select id="dob_month" class="form-select" style="flex:1.6" onchange="assembleDOB()">
+                  <option value="">Month</option><option value="01">January</option><option value="02">February</option>
+                  <option value="03">March</option><option value="04">April</option><option value="05">May</option>
+                  <option value="06">June</option><option value="07">July</option><option value="08">August</option>
+                  <option value="09">September</option><option value="10">October</option>
+                  <option value="11">November</option><option value="12">December</option>
+                </select>
+                <select id="dob_year" class="form-select" onchange="assembleDOB()"><option value="">Year</option></select>
+              </div>
+              <input type="hidden" id="det_dob"/>
+              <div class="invalid-feedback" id="det_dobErr" style="display:none"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Gender <span class="req">*</span></label>
+              <select id="det_gender" class="form-select">
+                <option value="">Select...</option><option>Male</option><option>Female</option><option>Other</option>
+              </select>
+              <div class="invalid-feedback" id="det_genderErr"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Blood Group <span class="req">*</span></label>
+              <select id="det_bloodGroup" class="form-select">
+                <option value="">Select...</option><option>A+</option><option>A-</option><option>B+</option>
+                <option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+              </select>
+              <div class="invalid-feedback" id="det_bloodGroupErr"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Category</label>
+              <select id="det_category" class="form-select">
+                <option value="">Select...</option><option>General</option><option>OBC</option>
+                <option>SC</option><option>ST</option><option>EWS</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Religion</label>
+              <select id="det_religion" class="form-select">
+                <option value="">Select...</option><option>Hindu</option><option>Muslim</option>
+                <option>Christian</option><option>Sikh</option><option>Buddhist</option>
+                <option>Jain</option><option>Other</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Nationality</label>
+              <input type="text" id="det_nationality" class="form-control" value="Indian"/>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Permanent Address <span class="req">*</span></label>
+              <textarea id="det_address" class="form-control" rows="2" placeholder="House No., Street, Area, City, State, PIN" maxlength="300"></textarea>
+              <div class="invalid-feedback" id="det_addressErr"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Father's / Guardian's Name <span class="req">*</span></label>
+              <div class="input-group"><span class="input-group-text"><i class="fas fa-person"></i></span>
+                <input type="text" id="det_fatherName" class="form-control" placeholder="Full name"/>
+              </div>
+              <div class="invalid-feedback" id="det_fatherNameErr"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Emergency Contact No. <span class="req">*</span></label>
+              <div class="input-group"><span class="input-group-text"><i class="fas fa-phone-volume"></i></span>
+                <input type="tel" id="det_emergencyPhone" class="form-control" placeholder="10-digit" maxlength="10"/>
+              </div>
+              <div class="invalid-feedback" id="det_emergencyPhoneErr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. ACADEMIC INFORMATION -->
+      <div class="det-section">
+        <div class="det-section-hdr"><i class="fas fa-graduation-cap"></i><span>Academic Information</span></div>
+        <div class="det-section-bdy">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">School / College Name <span class="req">*</span></label>
+              <div class="input-group"><span class="input-group-text"><i class="fas fa-school"></i></span>
+                <input type="text" id="det_schoolName" class="form-control" placeholder="Institution name"/>
+              </div>
+              <div class="invalid-feedback" id="det_schoolNameErr"></div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Class / Year</label>
+              <select id="det_class" class="form-select">
+                <option value="">Select...</option><option>Class 8</option><option>Class 9</option>
+                <option>Class 10</option><option>Class 11</option><option>Class 12</option>
+                <option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Stream / Branch</label>
+              <select id="det_stream" class="form-select">
+                <option value="">Select...</option><option>Science (PCM)</option><option>Science (PCB)</option>
+                <option>Commerce</option><option>Arts</option><option>Engineering</option>
+                <option>Medical</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. NCC UNIT DETAILS -->
+      <div class="det-section">
+        <div class="det-section-hdr"><i class="fas fa-shield-halved"></i><span>NCC Unit Details</span></div>
+        <div class="det-section-bdy">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Wing <span class="req">*</span></label>
+              <select id="det_wing" class="form-select">
+                <option value="">Select Wing...</option><option>Army Wing</option>
+                <option>Navy Wing</option><option>Air Force Wing</option>
+              </select>
+              <div class="invalid-feedback" id="det_wingErr"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Rank <span class="req">*</span></label>
+              <select id="det_rank" class="form-select">
+                <option value="">Select Rank...</option><option>Cadet</option>
+                <option>Lance Corporal</option><option>Corporal</option><option>Sergeant</option>
+                <option>Under Officer</option><option>Senior Under Officer</option>
+              </select>
+              <div class="invalid-feedback" id="det_rankErr"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Enrollment Year <span class="req">*</span></label>
+              <select id="det_enrollYear" class="form-select">
+                <option value="">Select Year...</option><option>2022</option><option>2023</option>
+                <option>2024</option><option>2025</option><option>2026</option>
+              </select>
+              <div class="invalid-feedback" id="det_enrollYearErr"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Certificate Level</label>
+              <select id="det_certificate" class="form-select">
+                <option value="">Select...</option><option>A Certificate</option>
+                <option>B Certificate</option><option>C Certificate</option><option>Not Appeared Yet</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">NCC Directorate</label>
+              <select id="det_directorate" class="form-select">
+                <option value="">Select State...</option>
+                <option>Andhra Pradesh &amp; Telangana</option><option>Bihar &amp; Jharkhand</option>
+                <option>Delhi</option><option>Gujarat, Daman &amp; Dadra</option>
+                <option>Himachal Pradesh</option><option>Jammu &amp; Kashmir</option>
+                <option>Karnataka</option><option>Kerala</option>
+                <option>Madhya Pradesh &amp; Chhattisgarh</option><option>Maharashtra</option>
+                <option>Manipur, Tripura &amp; Mizoram</option>
+                <option>Meghalaya, Nagaland &amp; Arunachal Pradesh</option>
+                <option>Odisha</option><option>Punjab, Haryana &amp; Chandigarh</option>
+                <option>Rajasthan</option><option>Tamil Nadu &amp; Puducherry</option>
+                <option>Uttar Pradesh</option><option>Uttarakhand</option>
+                <option>West Bengal &amp; Sikkim</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Training Status</label>
+              <select id="det_trainingStatus" class="form-select">
+                <option value="">Select...</option><option>Enrolled — Training Ongoing</option>
+                <option>Passed A Certificate</option><option>Passed B Certificate</option>
+                <option>Passed C Certificate</option><option>Training Completed</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Camps Attended</label>
+              <select id="det_campAttended" class="form-select">
+                <option value="">Select...</option><option>None</option>
+                <option>Annual Training Camp (ATC)</option><option>National Integration Camp (NIC)</option>
+                <option>Republic Day Camp (RDC)</option><option>Thal Sainik Camp (TSC)</option>
+                <option>Vayu Sainik Camp (VSC)</option><option>Nau Sainik Camp (NSC)</option>
+                <option>Multiple Camps</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Drill / Parade Proficiency</label>
+              <select id="det_drillProf" class="form-select">
+                <option value="">Select...</option><option>Beginner</option><option>Basic</option>
+                <option>Intermediate</option><option>Advanced</option><option>Instructor Level</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Awards / Medals</label>
+              <div class="input-group"><span class="input-group-text"><i class="fas fa-medal"></i></span>
+                <input type="text" id="det_awards" class="form-control" placeholder="e.g. Best Cadet 2024"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Sports / Extra Activities</label>
+              <div class="input-group"><span class="input-group-text"><i class="fas fa-person-running"></i></span>
+                <input type="text" id="det_sports" class="form-control" placeholder="e.g. Football, Shooting"/>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Special Skills / Remarks</label>
+              <textarea id="det_remarks" class="form-control" rows="2" placeholder="Leadership roles, skills, notes..." maxlength="250"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. DOCUMENT UPLOADS -->
+      <div class="det-section">
+        <div class="det-section-hdr"><i class="fas fa-folder-open"></i><span>Document Uploads</span></div>
+        <div class="det-section-bdy">
+          <div class="doc-grid">
+            <label class="doc-card" id="docCard_aadhar"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('aadhar',this)"/>
+              <div class="doc-icon"><i class="fas fa-id-card"></i></div><div class="doc-name">Aadhar Card</div>
+              <div class="doc-status" id="docSt_aadhar">Click to upload</div></label>
+            <label class="doc-card" id="docCard_marksheet"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('marksheet',this)"/>
+              <div class="doc-icon"><i class="fas fa-file-lines"></i></div><div class="doc-name">Marksheet / TC</div>
+              <div class="doc-status" id="docSt_marksheet">Click to upload</div></label>
+            <label class="doc-card" id="docCard_medical"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('medical',this)"/>
+              <div class="doc-icon"><i class="fas fa-file-medical"></i></div><div class="doc-name">Medical Fitness</div>
+              <div class="doc-status" id="docSt_medical">Click to upload</div></label>
+            <label class="doc-card" id="docCard_cert"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('cert',this)"/>
+              <div class="doc-icon"><i class="fas fa-certificate"></i></div><div class="doc-name">NCC Certificate</div>
+              <div class="doc-status" id="docSt_cert">Click to upload</div></label>
+            <label class="doc-card" id="docCard_conduct"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('conduct',this)"/>
+              <div class="doc-icon"><i class="fas fa-scroll"></i></div><div class="doc-name">Character Certificate</div>
+              <div class="doc-status" id="docSt_conduct">Click to upload</div></label>
+            <label class="doc-card" id="docCard_domicile"><input type="file" accept=".pdf,.jpg,.png" onchange="markDoc('domicile',this)"/>
+              <div class="doc-icon"><i class="fas fa-house-flag"></i></div><div class="doc-name">Domicile / Residence</div>
+              <div class="doc-status" id="docSt_domicile">Click to upload</div></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- DECLARATION -->
+      <div class="decl-box">
+        <label class="decl-label">
+          <input type="checkbox" id="det_declaration"/>
+          <span>I hereby declare that all information provided is <strong>true, correct and complete</strong>. Any false information may result in cancellation of my NCC enrollment. I confirm I am <strong>not enrolled in more than one NCC Unit</strong>.</span>
+        </label>
+        <div class="invalid-feedback" id="det_declarationErr" style="display:none;margin-top:8px;margin-left:29px;"></div>
+      </div>
+
+      <button class="btn-submit" onclick="submitDetails()">
+        <i class="fas fa-paper-plane me-2"></i> Submit Cadet Profile
+      </button>
+
+    </div><!-- card-body -->
+  </div><!-- page-details -->
+
+
+</div><!-- main-wrap -->
+
+<!-- SUCCESS OVERLAYS -->
+<div class="success-overlay" id="regSuccess">
+  <div class="success-box">
+    <div class="success-icon"><i class="fas fa-check"></i></div>
+    <div class="success-title">Registration Successful!</div>
+    <div class="success-sub">Your Cadet ID has been created:</div>
+    <div class="cadet-id-display" id="displayCadetId">—</div>
+    <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:18px">Save this ID — you'll need it to login</p>
+    <button class="btn-submit" onclick="closeSuccess('regSuccess'); switchPage('login')">
+      <i class="fas fa-right-to-bracket me-2"></i> Proceed to Login
+    </button>
+  </div>
+</div>
+
+<div class="success-overlay" id="loginSuccess">
+  <div class="success-box">
+    <div class="success-icon"><i class="fas fa-shield-halved"></i></div>
+    <div class="success-title">Login Successful!</div>
+    <div class="success-sub">Welcome back, Cadet. Proceeding to your detail form.</div>
+    <div style="width:100%;height:4px;background:var(--border);border-radius:2px;margin:20px 0">
+      <div id="loginProgressBar" style="height:100%;background:linear-gradient(90deg,var(--army-mid),var(--gold));border-radius:2px;width:0%;transition:width 2s"></div>
+    </div>
+  </div>
+</div>
+
+<div class="success-overlay" id="detailSuccess">
+  <div class="success-box">
+    <div class="success-icon"><i class="fas fa-id-card"></i></div>
+    <div class="success-title">Profile Submitted!</div>
+    <div class="success-sub">Your cadet details have been submitted successfully. Admin will review and activate your profile.</div>
+    <div style="margin:16px 0 20px">
+      <span style="background:rgba(30,126,52,0.1);color:var(--success);padding:6px 16px;border-radius:20px;font-size:0.82rem;font-weight:600">
+        <i class="fas fa-clock me-1"></i> Pending Admin Approval
+      </span>
+    </div>
+    <!-- PDF Download Button -->
+    <button class="btn-submit" onclick="downloadPDF()" style="margin-bottom:12px;background:linear-gradient(135deg,#c9a84c,#e8c96f);color:#001f3f;">
+      <i class="fas fa-file-pdf me-2"></i> Download PDF
+    </button>
+    <button class="btn-submit" onclick="window.location.href='index.html'" style="background:transparent;border:2px solid #c9a84c;color:#c9a84c;margin-top:0">
+      <i class="fas fa-home me-2"></i> Go to Dashboard
+    </button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ── PARTICLES ──────────────────────────────────────────────
+(function(){
+  const colors = ['#4a8c55','#c9a84c','#2d5a34','#e8c96f'];
+  const container = document.getElementById('particles');
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 3 + Math.random()*6;
+    Object.assign(p.style, {
+      width: size+'px', height: size+'px',
+      background: colors[Math.floor(Math.random()*colors.length)],
+      left: Math.random()*100+'%',
+      animationDuration: 8+Math.random()*12+'s',
+      animationDelay: -Math.random()*20+'s'
+    });
+    container.appendChild(p);
+  }
+})();
+
+// ── DOCUMENTS: removed (not needed) ──────────────────────
+
+// ── PAGE SWITCH ────────────────────────────────────────────
+const pages = ['register','login','details'];
+const progress = [33, 66, 100];
+function switchPage(page) {
+  pages.forEach(p => document.getElementById('page-'+p).style.display = 'none');
+  document.getElementById('page-'+page).style.display = '';
+  document.getElementById('page-'+page).style.animation = 'none';
+  requestAnimationFrame(()=>{
+    document.getElementById('page-'+page).style.animation = '';
+  });
+
+  const idx = pages.indexOf(page);
+  document.querySelectorAll('.step-btn').forEach((b,i)=>{
+    b.className = 'step-btn' + (i===idx?' active':(i<idx?' done':''));
+  });
+  document.getElementById('progressBar').style.width = progress[idx]+'%';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── DETAIL TABS: removed ────────────────────────────────
+
+// ── RADIO: removed ──────────────────────────────────────
+
+// ── PASSWORD TOGGLE ────────────────────────────────────────
+function togglePass(id, btn) {
+  const inp = document.getElementById(id);
+  const icon = btn.querySelector('i');
+  if(inp.type==='password'){
+    inp.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    inp.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+// ── PASS STRENGTH ──────────────────────────────────────────
+document.getElementById('reg_password').addEventListener('input', function(){
+  const v = this.value;
+  const el = document.getElementById('passStrength');
+  if(!v){ el.textContent=''; return; }
+  let score = 0;
+  if(v.length>=8) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  const levels = [
+    {label:'Weak',     color:'var(--error)'},
+    {label:'Fair',     color:'#e67e22'},
+    {label:'Good',     color:'#f1c40f'},
+    {label:'Strong',   color:'var(--success)'},
+    {label:'Very Strong', color:'#1a8e2c'},
+  ];
+  const l = levels[score] || levels[0];
+  el.innerHTML = `<span style="color:${l.color}"><i class="fas fa-circle-dot"></i> ${l.label} password</span>`;
+});
+
+// ── PHOTO PREVIEW: removed ──────────────────────────────
+
+// ── DOC UPLOAD: removed ─────────────────────────────────
+
+// ── ALERT HELPER ───────────────────────────────────────────
+function showAlert(id, type, msg) {
+  document.getElementById(id).innerHTML =
+    `<div class="alert-army ${type} mb-3">
+      <i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}" style="margin-top:2px"></i>
+      <span>${msg}</span>
+    </div>`;
+}
+function clearAlert(id){ document.getElementById(id).innerHTML=''; }
+
+// ── VALIDATION HELPERS ─────────────────────────────────────
+function setError(id, msg){
+  const el = document.getElementById(id);
+  if(el){ el.textContent=msg; el.style.display='block'; }
+  // Also mark the input red
+  const inputId = id.replace('Err','');
+  const inp = document.getElementById('reg_'+inputId) ||
+              document.getElementById('login_'+inputId) ||
+              document.getElementById('det_'+inputId) ||
+              document.getElementById(inputId);
+  if(inp) inp.classList.add('is-invalid');
+}
+function clearErrors(...ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.textContent='';el.style.display='none';}
+    // Remove red border from associated input
+    const inputId = id.replace('Err','');
+    const inp = document.getElementById('reg_'+inputId) ||
+                document.getElementById('login_'+inputId) ||
+                document.getElementById('det_'+inputId) ||
+                document.getElementById(inputId);
+    if(inp) inp.classList.remove('is-invalid');
+  });
+}
+
+// Clear red border on input when user starts typing
+document.querySelectorAll('.form-control, .form-select').forEach(inp=>{
+  inp.addEventListener('input', ()=> inp.classList.remove('is-invalid'));
+  inp.addEventListener('change', ()=> inp.classList.remove('is-invalid'));
+});
+
+// ── REGISTRATION ───────────────────────────────────────────
+function submitRegistration() {
+  clearErrors('cadetIdErr','firstNameErr','lastNameErr','phoneErr','bnCodeErr','passwordErr','confirmPassErr');
+  clearAlert('regAlert');
+
+  const cadetId   = document.getElementById('reg_cadetId').value.trim();
+  const firstName = document.getElementById('reg_firstName').value.trim();
+  const lastName  = document.getElementById('reg_lastName').value.trim();
+  const phone     = document.getElementById('reg_phone').value.trim();
+  const bnCode    = document.getElementById('reg_bnCode').value.trim();
+  const password  = document.getElementById('reg_password').value;
+  const confirm   = document.getElementById('reg_confirmPassword').value;
+
+  let valid = true;
+  let firstErrField = null;
+
+  // Cadet ID: required, min 5 chars, format NCC + digits or alphanumeric
+  if(!cadetId){
+    setError('cadetIdErr','Cadet ID is required.');
+    document.getElementById('reg_cadetId').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_cadetId';
+    valid=false;
+  } else if(cadetId.length < 5){
+    setError('cadetIdErr','Cadet ID must be at least 5 characters.');
+    document.getElementById('reg_cadetId').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_cadetId';
+    valid=false;
+  } else if(!/^[A-Z0-9]+$/.test(cadetId)){
+    setError('cadetIdErr','Only uppercase letters and numbers allowed.');
+    document.getElementById('reg_cadetId').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_cadetId';
+    valid=false;
+  }
+
+  // First Name: required, only letters and spaces
+  if(!firstName){
+    setError('firstNameErr','First name is required.');
+    document.getElementById('reg_firstName').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_firstName';
+    valid=false;
+  } else if(!/^[a-zA-Z\s]+$/.test(firstName)){
+    setError('firstNameErr','Only letters allowed in name.');
+    document.getElementById('reg_firstName').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_firstName';
+    valid=false;
+  }
+
+  // Last Name: required, only letters
+  if(!lastName){
+    setError('lastNameErr','Last name is required.');
+    document.getElementById('reg_lastName').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_lastName';
+    valid=false;
+  } else if(!/^[a-zA-Z\s]+$/.test(lastName)){
+    setError('lastNameErr','Only letters allowed in name.');
+    document.getElementById('reg_lastName').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_lastName';
+    valid=false;
+  }
+
+  // Phone: 10 digits, Indian mobile (starts 6-9)
+  if(!phone){
+    setError('phoneErr','Phone number is required.');
+    document.getElementById('reg_phone').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_phone';
+    valid=false;
+  } else if(!/^\d+$/.test(phone)){
+    setError('phoneErr','Phone must contain digits only.');
+    document.getElementById('reg_phone').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_phone';
+    valid=false;
+  } else if(!/^[6-9]\d{9}$/.test(phone)){
+    setError('phoneErr','Enter valid 10-digit Indian mobile number (starts with 6-9).');
+    document.getElementById('reg_phone').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_phone';
+    valid=false;
+  }
+
+  // BN Code: required
+  if(!bnCode){
+    setError('bnCodeErr','BN Code is required.');
+    document.getElementById('reg_bnCode').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_bnCode';
+    valid=false;
+  } else if(bnCode.length < 3){
+    setError('bnCodeErr','BN Code must be at least 3 characters.');
+    document.getElementById('reg_bnCode').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_bnCode';
+    valid=false;
+  }
+
+  // Password: min 8 chars, must have uppercase, number, special char
+  if(!password){
+    setError('passwordErr','Password is required.');
+    document.getElementById('reg_password').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_password';
+    valid=false;
+  } else if(password.length < 8){
+    setError('passwordErr','Password must be at least 8 characters.');
+    document.getElementById('reg_password').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_password';
+    valid=false;
+  } else if(!/[A-Z]/.test(password)){
+    setError('passwordErr','Password must contain at least one uppercase letter.');
+    document.getElementById('reg_password').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_password';
+    valid=false;
+  } else if(!/[0-9]/.test(password)){
+    setError('passwordErr','Password must contain at least one number.');
+    document.getElementById('reg_password').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_password';
+    valid=false;
+  }
+
+  // Confirm Password: must match
+  if(!confirm){
+    setError('confirmPassErr','Please confirm your password.');
+    document.getElementById('reg_confirmPassword').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_confirmPassword';
+    valid=false;
+  } else if(password !== confirm){
+    setError('confirmPassErr','Passwords do not match.');
+    document.getElementById('reg_confirmPassword').classList.add('is-invalid');
+    if(!firstErrField) firstErrField = 'reg_confirmPassword';
+    valid=false;
+  }
+
+  if(!valid){
+    // Scroll to first error field
+    if(firstErrField){
+      const el = document.getElementById(firstErrField);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+    showAlert('regAlert','error','Please fix the errors below before submitting.');
+    return;
+  }
+
+  // ── API CALL: Register ──────────────────────────────────
+  const btn = document.querySelector('#page-register .btn-submit');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Registering...';
+  btn.disabled = true;
+
+  fetch('http://localhost:3000/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cadetId, firstName, middleName: document.getElementById('reg_middleName').value.trim(), lastName, phone, bnCode, password })
+  })
+  .then(async r => { const d = await r.json(); if(!r.ok) throw new Error(d.message); return d; })
+  .then(res => {
+    document.getElementById('displayCadetId').textContent = cadetId;
+    document.getElementById('regSuccess').classList.add('show');
+    document.getElementById('login_cadetId').value = cadetId;
+    document.getElementById('login_bnCode').value  = bnCode;
+    document.getElementById('det_bnCode').value    = bnCode;
+    document.getElementById('det_mobile').value    = phone;
+  })
+  .catch(err => {
+    showAlert('regAlert','error', err.message || 'Registration failed. Please try again.');
+  })
+  .finally(() => {
+    btn.innerHTML = '<i class="fas fa-user-plus me-2"></i> Register & Continue';
+    btn.disabled = false;
+  });
+}
+
+// ── LOGIN ──────────────────────────────────────────────────
+function submitLogin() {
+  clearAlert('loginAlert');
+
+  const cadetId  = document.getElementById('login_cadetId').value.trim();
+  const bnCode   = document.getElementById('login_bnCode').value.trim();
+  const password = document.getElementById('login_password').value;
+
+  let valid = true;
+
+  // Remove any previous red borders
+  ['login_cadetId','login_bnCode','login_password'].forEach(id=>{
+    document.getElementById(id).classList.remove('is-invalid');
+  });
+
+  if(!cadetId){
+    document.getElementById('login_cadetId').classList.add('is-invalid');
+    valid=false;
+  } else if(cadetId.length < 5){
+    document.getElementById('login_cadetId').classList.add('is-invalid');
+    valid=false;
+  }
+
+  if(!bnCode){
+    document.getElementById('login_bnCode').classList.add('is-invalid');
+    valid=false;
+  }
+
+  if(!password){
+    document.getElementById('login_password').classList.add('is-invalid');
+    valid=false;
+  } else if(password.length < 8){
+    document.getElementById('login_password').classList.add('is-invalid');
+    valid=false;
+  }
+
+  if(!valid){
+    showAlert('loginAlert','error','Please fill in all fields correctly to continue.');
+    return;
+  }
+
+  const btn = document.querySelector('#page-login .btn-submit');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Authenticating...';
+  btn.disabled = true;
+
+  fetch('http://localhost:3000/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cadetId, bnCode, password })
+  })
+  .then(async r => { const d = await r.json(); if(!r.ok) throw new Error(d.message); return d; })
+  .then(res => {
+    // Store logged in cadet ID for details page
+    window._loggedCadetId = cadetId;
+    document.getElementById('det_bnCode').value = bnCode;
+    document.getElementById('loginSuccess').classList.add('show');
+    const bar = document.getElementById('loginProgressBar');
+    setTimeout(()=>{ bar.style.width='100%'; }, 100);
+    setTimeout(()=>{
+      document.getElementById('loginSuccess').classList.remove('show');
+      switchPage('details');
+    }, 2300);
+  })
+  .catch(err => {
+    showAlert('loginAlert','error', err.message || 'Login failed. Check your credentials.');
+  })
+  .finally(() => {
+    btn.innerHTML = '<i class="fas fa-right-to-bracket me-2"></i> Login to Portal';
+    btn.disabled = false;
+  });
+}
+
+// ── PHOTO UPLOAD ───────────────────────────────────────────
+function handlePhotoUpload(input) {
+  const file = input.files[0];
+  const errEl = document.getElementById('det_photoErr');
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) {
+    errEl.textContent = 'Photo must be under 2MB.'; errEl.style.display = 'block';
+    input.value = ''; return;
+  }
+  if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
+    errEl.textContent = 'Only JPG or PNG allowed.'; errEl.style.display = 'block';
+    input.value = ''; return;
+  }
+  errEl.style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('det_photoPreview').src = e.target.result;
+    document.getElementById('photoBox').classList.add('has-photo');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── DOC MARK ───────────────────────────────────────────────
+function markDoc(id, input) {
+  if (!input.files[0]) return;
+  const card = document.getElementById('docCard_' + id);
+  const st   = document.getElementById('docSt_' + id);
+  card.classList.add('uploaded');
+  const n = input.files[0].name;
+  st.textContent = '\u2713 ' + (n.length > 18 ? n.substring(0,18)+'\u2026' : n);
+}
+
+// ── SUBMIT DETAILS ─────────────────────────────────────────
+function submitDetails() {
+  clearAlert('detailAlert');
+  const photo       = document.getElementById('det_photoInput').files[0];
+  const bnCode      = document.getElementById('det_bnCode').value.trim();
+  const mobile      = document.getElementById('det_mobile').value.trim();
+  const dob         = document.getElementById('det_dob').value;
+  const gender      = document.getElementById('det_gender').value;
+  const bloodGroup  = document.getElementById('det_bloodGroup').value;
+  const address     = document.getElementById('det_address').value.trim();
+  const fatherName  = document.getElementById('det_fatherName').value.trim();
+  const emergPhone  = document.getElementById('det_emergencyPhone').value.trim();
+  const schoolName  = document.getElementById('det_schoolName').value.trim();
+  const wing        = document.getElementById('det_wing').value;
+  const rank        = document.getElementById('det_rank').value;
+  const enrollYear  = document.getElementById('det_enrollYear').value;
+  const declaration = document.getElementById('det_declaration').checked;
+
+  // Clear all errors
+  const errIds = ['det_photoErr','det_bnCodeErr','det_mobileErr','det_dobErr','det_genderErr',
+    'det_bloodGroupErr','det_addressErr','det_fatherNameErr','det_emergencyPhoneErr',
+    'det_schoolNameErr','det_wingErr','det_rankErr','det_enrollYearErr','det_declarationErr'];
+  errIds.forEach(id => { const e=document.getElementById(id); if(e){e.textContent='';e.style.display='none';} });
+  ['det_bnCode','det_mobile','det_gender','det_bloodGroup','det_address','det_fatherName',
+   'det_emergencyPhone','det_schoolName','det_wing','det_rank','det_enrollYear',
+   'dob_day','dob_month','dob_year'].forEach(id => {
+    const e=document.getElementById(id); if(e) e.classList.remove('is-invalid');
+  });
+
+  const errors = [];
+  const setErr = (inputId, errId, msg) => {
+    const inp = document.getElementById(inputId); if(inp) inp.classList.add('is-invalid');
+    const el  = document.getElementById(errId);
+    if(el){ el.textContent=msg; el.style.display='block'; }
+    errors.push(msg);
+  };
+
+  if (!photo) { const e=document.getElementById('det_photoErr'); e.textContent='Passport photo required.'; e.style.display='block'; errors.push('Photo required.'); }
+  if (!bnCode || bnCode.length < 3)  setErr('det_bnCode','det_bnCodeErr', !bnCode ? 'BN Code is required.' : 'Min 3 characters.');
+  if (!mobile || !/^[6-9]\d{9}$/.test(mobile)) setErr('det_mobile','det_mobileErr', !mobile ? 'Mobile is required.' : 'Enter valid 10-digit mobile (starts 6-9).');
+  if (!dob) {
+    ['dob_day','dob_month','dob_year'].forEach(id => document.getElementById(id).classList.add('is-invalid'));
+    const e=document.getElementById('det_dobErr'); e.textContent='Date of Birth is required.'; e.style.display='block';
+    errors.push('DOB required.');
+  } else {
+    const dobDate=new Date(dob), today=new Date();
+    let age=today.getFullYear()-dobDate.getFullYear();
+    const mo=today.getMonth()-dobDate.getMonth();
+    if(mo<0||(mo===0&&today.getDate()<dobDate.getDate())) age--;
+    if(age<13||age>26){
+      ['dob_day','dob_month','dob_year'].forEach(id=>document.getElementById(id).classList.add('is-invalid'));
+      const e=document.getElementById('det_dobErr');
+      e.textContent = age<13 ? 'Cadet must be at least 13 years old.' : 'Age cannot exceed 26 years.';
+      e.style.display='block'; errors.push(e.textContent);
+    }
+  }
+  if (!gender)     setErr('det_gender','det_genderErr','Please select gender.');
+  if (!bloodGroup) setErr('det_bloodGroup','det_bloodGroupErr','Please select blood group.');
+  if (!address || address.length < 10) setErr('det_address','det_addressErr','Enter full address (min 10 chars).');
+  if (!fatherName) setErr('det_fatherName','det_fatherNameErr',"Father/Guardian name is required.");
+  else if(!/^[a-zA-Z\s.]+$/.test(fatherName)) setErr('det_fatherName','det_fatherNameErr','Only letters allowed.');
+  if (!emergPhone || !/^[6-9]\d{9}$/.test(emergPhone)) setErr('det_emergencyPhone','det_emergencyPhoneErr', !emergPhone ? 'Emergency contact required.' : 'Enter valid 10-digit number.');
+  if (!schoolName) setErr('det_schoolName','det_schoolNameErr','School/College name is required.');
+  if (!wing)       setErr('det_wing','det_wingErr','Please select a Wing.');
+  if (!rank)       setErr('det_rank','det_rankErr','Please select a Rank.');
+  if (!enrollYear) setErr('det_enrollYear','det_enrollYearErr','Please select Enrollment Year.');
+  if (!declaration) { const e=document.getElementById('det_declarationErr'); e.textContent='Accept declaration to proceed.'; e.style.display='block'; errors.push('Declaration required.'); }
+
+  if (errors.length > 0) {
+    const list = errors.map(e=>`<li style="margin-bottom:3px">${e}</li>`).join('');
+    showAlert('detailAlert','error',`<strong>Fix ${errors.length} error(s):</strong><ul style="margin:8px 0 0 16px;padding:0">${list}</ul>`);
+    window.scrollTo({top:0,behavior:'smooth'}); return;
+  }
+
+  const btn = document.querySelector('#page-details .btn-submit');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Submitting...';
+  btn.disabled = true;
+
+  fetch('http://localhost:3000/api/cadet-details', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      cadetId: window._loggedCadetId, bnCode, mobile, dob, gender, bloodGroup,
+      address, fatherName, emergencyPhone: emergPhone, schoolName, wing, rank, enrollYear,
+      unitName:        document.getElementById('det_unitName').value.trim(),
+      groupHQ:         document.getElementById('det_groupHQ').value.trim(),
+      category:        document.getElementById('det_category').value,
+      religion:        document.getElementById('det_religion').value,
+      nationality:     document.getElementById('det_nationality').value.trim(),
+      classYear:       document.getElementById('det_class').value,
+      stream:          document.getElementById('det_stream').value,
+      directorate:     document.getElementById('det_directorate').value,
+      certificate:     document.getElementById('det_certificate').value,
+      trainingStatus:  document.getElementById('det_trainingStatus').value,
+      campAttended:    document.getElementById('det_campAttended').value,
+      drillProficiency:document.getElementById('det_drillProf').value,
+      awards:          document.getElementById('det_awards').value.trim(),
+      sports:          document.getElementById('det_sports').value.trim(),
+      remarks:         document.getElementById('det_remarks').value.trim(),
+    })
+  })
+  .then(async r => { const d=await r.json(); if(!r.ok) throw new Error(d.message); return d; })
+  .then(() => { document.getElementById('detailSuccess').classList.add('show'); })
+  .catch(err => { showAlert('detailAlert','error', err.message || 'Could not save. Try again.'); })
+  .finally(() => { btn.innerHTML='<i class="fas fa-paper-plane me-2"></i> Submit Cadet Profile'; btn.disabled=false; });
+}
+
+// ── DOB DROPDOWNS ──────────────────────────────────────────
+(function buildDOBDropdowns() {
+  // Populate Day dropdown 1-31
+  const dayEl = document.getElementById('dob_day');
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option');
+    o.value = String(d).padStart(2, '0');
+    o.textContent = d;
+    dayEl.appendChild(o);
+  }
+
+  // Populate Year dropdown — 1990 to 2013 (age 13-35 range)
+  const yearEl = document.getElementById('dob_year');
+  for (let y = 2013; y >= 1990; y--) {
+    const o = document.createElement('option');
+    o.value = y;
+    o.textContent = y;
+    yearEl.appendChild(o);
+  }
+})();
+
+function assembleDOB() {
+  const day   = document.getElementById('dob_day').value;
+  const month = document.getElementById('dob_month').value;
+  const year  = document.getElementById('dob_year').value;
+
+  if (day && month && year) {
+    // Set hidden field as YYYY-MM-DD
+    document.getElementById('det_dob').value = `${year}-${month}-${day}`;
+  } else {
+    document.getElementById('det_dob').value = '';
+  }
+  // Clear error styling when user selects
+  ['dob_day','dob_month','dob_year'].forEach(id => {
+    document.getElementById(id).classList.remove('is-invalid');
+  });
+}
+
+// ── CLOSE OVERLAYS ─────────────────────────────────────────
+function closeSuccess(id){
+  document.getElementById(id).classList.remove('show');
+}
+// Close on backdrop click
+document.querySelectorAll('.success-overlay').forEach(o=>{
+  o.addEventListener('click', e=>{ if(e.target===o) o.classList.remove('show'); });
+});
+
+// ── PDF DOWNLOAD ────────────────────────────────────────────
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  // ── Collect all form data ──
+  const cadetId   = document.getElementById('reg_cadetId')?.value   || document.getElementById('login_cadetId')?.value || '—';
+  const firstName = document.getElementById('reg_firstName')?.value || '—';
+  const midName   = document.getElementById('reg_middleName')?.value || '';
+  const lastName  = document.getElementById('reg_lastName')?.value  || '—';
+  const phone     = document.getElementById('reg_phone')?.value     || '—';
+  const bnCode    = document.getElementById('det_bnCode')?.value    || document.getElementById('reg_bnCode')?.value || '—';
+  const mobile    = document.getElementById('det_mobile')?.value    || '—';
+  const wing      = document.getElementById('det_wing')?.value      || '—';
+  const rank      = document.getElementById('det_rank')?.value      || '—';
+  const enrollYr  = document.getElementById('det_enrollYear')?.value|| '—';
+  const dob       = document.getElementById('det_dob')?.value       || '—';
+  const address   = document.getElementById('det_address')?.value   || '—';
+  const fullName  = [firstName, midName, lastName].filter(Boolean).join(' ');
+  const today     = new Date().toLocaleDateString('en-IN', {day:'2-digit',month:'long',year:'numeric'});
+
+  const pageW = 210;
+  const pageH = 297;
+
+  // ── BACKGROUND ──
+  doc.setFillColor(250, 246, 236);
+  doc.rect(0, 0, pageW, pageH, 'F');
+
+  // ── TOP HEADER BAR ──
+  doc.setFillColor(0, 31, 63);
+  doc.rect(0, 0, pageW, 38, 'F');
+
+  // Gold border line
+  doc.setFillColor(201, 168, 76);
+  doc.rect(0, 38, pageW, 1.5, 'F');
+
+  // Header text
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(18);
+  doc.setTextColor(201, 168, 76);
+  doc.text('NATIONAL CADET CORPS', pageW/2, 16, { align: 'center' });
+
+  doc.setFontSize(10);
+  doc.setTextColor(200, 200, 200);
+  doc.text('CADET ENROLLMENT FORM', pageW/2, 24, { align: 'center' });
+
+  doc.setFontSize(8);
+  doc.setTextColor(160, 160, 160);
+  doc.text('DIGITAL PORTAL · NCC MANAGEMENT SYSTEM', pageW/2, 31, { align: 'center' });
+
+  // ── CADET ID BOX ──
+  doc.setFillColor(0, 48, 102);
+  doc.roundedRect(14, 46, 182, 18, 3, 3, 'F');
+  doc.setFillColor(201, 168, 76);
+  doc.roundedRect(14, 46, 50, 18, 3, 3, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(0, 31, 63);
+  doc.text('CADET ID', 39, 53, { align: 'center' });
+  doc.setFontSize(11);
+  doc.text(cadetId, 39, 60, { align: 'center' });
+  doc.setTextColor(201, 168, 76);
+  doc.setFontSize(9);
+  doc.text('PRIMARY KEY', 72, 52);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(13);
+  doc.setFont('helvetica', 'bold');
+  doc.text(cadetId, 72, 61);
+
+  let y = 76;
+
+  // ── SECTION HELPER ──
+  function sectionTitle(title, icon) {
+    doc.setFillColor(0, 64, 128);
+    doc.rect(14, y, 182, 7, 'F');
+    doc.setFillColor(201, 168, 76);
+    doc.rect(14, y, 3, 7, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(255, 255, 255);
+    doc.text(title, 21, y + 4.8);
+    y += 12;
+  }
+
+  // ── FIELD HELPER ──
+  function field(label, value, x, fieldWidth) {
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(x, y - 1, fieldWidth, 14, 2, 2, 'F');
+    doc.setDrawColor(212, 200, 154);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(x, y - 1, fieldWidth, 14, 2, 2, 'S');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(90, 90, 90);
+    doc.text(label.toUpperCase(), x + 3, y + 4);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9.5);
+    doc.setTextColor(26, 26, 26);
+    doc.text(String(value || '—').substring(0, Math.floor(fieldWidth/2.2)), x + 3, y + 10.5);
+  }
+
+  // ── PERSONAL INFO ──
+  sectionTitle('PERSONAL INFORMATION');
+  field('Full Name', fullName, 14, 182);
+  y += 18;
+  field('Phone Number', phone, 14, 88);
+  field('BN Code', bnCode, 108, 88);
+  y += 18;
+
+  // ── NCC DETAILS ──
+  sectionTitle('NCC DETAILS');
+  field('NCC Wing', wing, 14, 58);
+  field('Rank', rank, 76, 58);
+  field('Enrollment Year', enrollYr, 138, 58);
+  y += 18;
+  field('Mobile (Detail)', mobile, 14, 88);
+  field('Date of Birth', dob, 108, 88);
+  y += 18;
+
+  // ── ADDRESS ──
+  sectionTitle('ADDRESS');
+  doc.setFillColor(255, 255, 255);
+  doc.roundedRect(14, y - 1, 182, 20, 2, 2, 'F');
+  doc.setDrawColor(212, 200, 154);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(14, y - 1, 182, 20, 2, 2, 'S');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(90, 90, 90);
+  doc.text('PERMANENT ADDRESS', 17, y + 4);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(26, 26, 26);
+  const addressLines = doc.splitTextToSize(address || '—', 175);
+  doc.text(addressLines.slice(0, 2), 17, y + 11);
+  y += 26;
+
+  // ── DECLARATION BOX ──
+  doc.setFillColor(245, 233, 192);
+  doc.roundedRect(14, y, 182, 22, 3, 3, 'F');
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(14, y, 182, 22, 3, 3, 'S');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(0, 31, 63);
+  doc.text('DECLARATION', 105, y + 6, { align: 'center' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(50, 50, 50);
+  const declaration = 'I hereby declare that the information provided above is true and correct to the best of my knowledge. I understand that any false information may lead to cancellation of my enrollment.';
+  const declLines = doc.splitTextToSize(declaration, 170);
+  doc.text(declLines, 105, y + 12, { align: 'center' });
+  y += 30;
+
+  // ── SIGNATURE SECTION ──
+  doc.setDrawColor(180, 160, 100);
+  doc.setLineWidth(0.5);
+  // Cadet signature
+  doc.line(20, y + 14, 80, y + 14);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(90, 90, 90);
+  doc.text('Cadet Signature', 50, y + 19, { align: 'center' });
+  doc.text('Date: ' + today, 50, y + 24, { align: 'center' });
+  // Officer signature
+  doc.line(130, y + 14, 190, y + 14);
+  doc.text('Commanding Officer', 160, y + 19, { align: 'center' });
+  doc.text('Official Stamp', 160, y + 24, { align: 'center' });
+
+  // ── FOOTER BAR ──
+  doc.setFillColor(0, 31, 63);
+  doc.rect(0, pageH - 14, pageW, 14, 'F');
+  doc.setFillColor(201, 168, 76);
+  doc.rect(0, pageH - 14, pageW, 1, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.setTextColor(160, 160, 160);
+  doc.text('NCC Management System · Digital Portal', 14, pageH - 6);
+  doc.text('Generated: ' + today, pageW - 14, pageH - 6, { align: 'right' });
+  doc.setTextColor(201, 168, 76);
+  doc.text('CONFIDENTIAL', pageW/2, pageH - 6, { align: 'center' });
+
+  // ── SAVE PDF ──
+  doc.save('NCC_Cadet_Form_' + cadetId + '.pdf');
+}
+</script>
+</body>
+</html>
